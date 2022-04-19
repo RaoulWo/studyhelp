@@ -1,53 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    <!--Icons-->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="style.css">
+    <!-- Include MetaData, Bootstrap and jQuery -->
+    <?php include_once("inc/metaData.php"); ?>
     <title>Studyhelp</title>
 </head>
 <body>
-    <!--Navbar-->
-    <!--Kann man dann auslagern-->
-    <nav class="navbar navbar-expand-lg bg-dark navbar-dark py-3">
-        <div class="container">
-            <a href="#" class="navbar-brand">STUDYHELP</a>
-
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="navmenu">
-             <span class="navbar-toggler-icon"></span>
-            </button>
-            
-            
-            <div class="collapse navbar-collapse" id="navmenu">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a href="#link1" class="nav-link">Link1</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#link2" class="nav-link">Link2</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#link3" class="nav-link">Link3</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#link4" class="nav-link">Link4</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#link5" class="nav-link">Link5</a>
-                    </li>
-
-                </ul>
-            </div>
-        </div>
-
-    </nav>
+    <!-- Include Navbar -->
+    <?php include_once("inc/navbar.php"); ?>    
 
     <!--Startseitencontainer-->
-    <section class="bg-dark text-light p-5 p-lg-0 pt-lg-5 text-center text-sm-start">
+    <section class="bg-dark text-light p-5 p-lg-0 pb-lg-4 text-center text-sm-start">
         <div class="container">
             <div class="d-sm-flex align-items-center justify-content-between">
                 <div>
@@ -196,7 +159,7 @@
 
 
 
-
+    <!-- JavaScript for Bootstrap5 -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 </body>
 </html> 
