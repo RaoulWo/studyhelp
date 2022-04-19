@@ -1,5 +1,5 @@
 <?php
-include("businesslogic/simpleLogic.php");
+include("logic/logic.php");
 
 $param = "";
 $method = "";
