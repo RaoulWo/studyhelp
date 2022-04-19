@@ -1,17 +1,20 @@
 <?php
+// Include DataHandler-Class
 include("db/dataHandler.php");
 
-class SimpleLogic
+// Definition of Logic-Class
+class Logic 
 {
+    // #### Private Attributes ####
     private $dh;
-    function __construct()
-    {
+    // #### Constructor ####
+    function __construct() {
         $this->dh = new DataHandler();
     }
-
-    function handleRequest($method, $param)
-    {
+    // #### Public Methods ####
+    function handleRequest($method, $param) {
         switch ($method) {
+            // **** Insert RequestMethods here ****
             case "queryVocabList":
                 $res = $this->dh->queryVocabList();
                 break;
@@ -27,3 +30,5 @@ class SimpleLogic
         return $res;
     }
 }
+
+?>

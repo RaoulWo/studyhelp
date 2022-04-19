@@ -1,22 +1,26 @@
 <?php
+// Include Logic-Class
 include("logic/logic.php");
 
+// #### RequestHandling ####
 $param = "";
 $method = "";
 
 isset($_GET["method"]) ? $method = $_GET["method"] : false;
 isset($_GET["param"]) ? $param = $_GET["param"] : false;
 
-$logic = new SimpleLogic();
+$logic = new Logic();
 $result = $logic->handleRequest($method, $param);
+
+// #### ResponseHandling ####
 if ($result == null) {
     response("GET", 400, null);
-} else {
+} 
+else {
     response("GET", 200, $result);
 }
 
-function response($method, $httpStatus, $data)
-{
+function response($method, $httpStatus, $data) {
     header('Content-Type: application/json');
     switch ($method) {
         case "GET":
@@ -28,3 +32,5 @@ function response($method, $httpStatus, $data)
             echo ("Method not supported yet!");
     }
 }
+
+?>
