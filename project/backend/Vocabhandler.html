@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <title>Vocabhandler</title>
+</head>
+
+<body style="text-align:center">
+
+    <h1>Vocabulary Handler Tool</h1><br>
+
+    <form action="Vocabhandler.php" method="post" enctype="multipart/form-data">
+        Select CSV file with vocabulary to upload:  
+        <input type="file" name="fileToUpload" id="fileToUpload">
+        <br><br>
+        <label for="lang1">Language 1: (This feature will be added at a later stage)</label>
+        <select class="form-select" aria-label="lang3" id="lang1" name="lang1" disabled>
+            <option selected>Deutsch</option>
+            <option value="1">Englisch</option>
+            <option value="2">Spanisch</option>
+            <option value="3">Französisch</option>
+        </select>
+
+        <label for="lang2">Language 2: </label>
+        <select class="form-select" aria-label="lang2" id="lang2" name="lang2">
+            <option selected>Englisch</option>
+            <option value="1">Deutsch</option>
+            <option value="2">Spanisch</option>
+            <option value="3">Französisch</option>
+        </select>
+        <br><br>
+        <input class="btn btn-primary" type="submit" value="Upload Vocab List" name="submit">
+    </form>
+    <br>
+
+</body>
+
+</html>
