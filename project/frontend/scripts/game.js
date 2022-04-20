@@ -37,7 +37,7 @@ function startGame() {
         fadeInGameCards();
     }, FADING_TIME);
     // Start Timer
-    time = 5;
+    time = 30;
     startGameTime();
     // Perform AJAX-call
     nextQuestion();
