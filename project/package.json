@@ -10,6 +10,10 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@types/jquery": "^3.5.14",
     "lite-server": "^2.6.1"
+  },
+  "dependencies": {
+    "mdb-ui-kit": "^4.0.0"
   }
 }

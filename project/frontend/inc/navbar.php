@@ -11,11 +11,11 @@
 
 <nav class="navbar navbar-expand-lg bg-dark navbar-dark py-3">
   <div class="container">
-    <a href="<?php echo $link0; ?>" class="navbar-brand"><?php echo $name0; ?></a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="navmenu">
+    <a href="<?php echo $link0; ?>" class="navbar-brand"><?php echo '<i class="fa-solid fa-graduation-cap"></i>' . ' ' . $name0; ?></a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapseNavbar">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" id="navmenu">
+    <div class="collapse navbar-collapse" id="collapseNavbar">
       <ul class="navbar-nav ms-auto">
         <li class="nav-item">
             <a href="<?php echo $link1; ?>" class="nav-link"><?php echo $name1; ?></a>
