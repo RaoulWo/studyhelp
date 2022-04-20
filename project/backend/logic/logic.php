@@ -15,6 +15,9 @@ class Logic
     function handleRequest($method, $param) {
         switch ($method) {
             // **** Insert RequestMethods here ****
+            case "queryRandomVocabByLanguage":
+                $res = $this->dh->queryRandomVocabByLanguage($param);
+                break;
             case "queryVocabList":
                 $res = $this->dh->queryVocabList();
                 break;
