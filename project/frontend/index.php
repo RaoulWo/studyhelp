@@ -137,7 +137,7 @@
             <div class="row align-items-center justify-content-between">
                 
                 <div class="col-md p-5">
-                    <h2>Resulate</h2>
+                    <h2>Resultate</h2>
                     <p class="lead">
                         Lorem ipsum dolor sit amet consectetur, adipisicing elit. Incidunt eum unde commodi molestias. Aliquam, necessitatibus!
                     </p>
