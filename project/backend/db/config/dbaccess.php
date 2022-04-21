@@ -3,6 +3,6 @@
   $host = "localhost";
   $user = "access";
   $password = "itp";
-  $database = "studyhelp";
+  $database = "vokabeln";
 
 ?>

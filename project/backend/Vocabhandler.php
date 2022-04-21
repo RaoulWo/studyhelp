@@ -61,8 +61,8 @@ function database($fp, $table, $lang1, $lang2)
 
 
     while (($row = fgetcsv($fp, 250, ";")) !== FALSE) {     //looping though every Voacbulary in the list
-        $col1 = $row[0];                                    //lang1 Word        
-        $col2 = $row[1];                                    //lang2 Word
+        $col1 = $db->real_escape_string($row[0]);                                    //lang1 Word
+        $col2 = $db->real_escape_string($row[1]);                                  //lang2 Word
 
         $check1 = "SELECT * FROM " . $table . " WHERE " . $lang1 . " = '$col1'";  //Checking in Database if the word already is in list in either language to avoid redundancies
         $result1 = mysqli_query($db, $check1);
