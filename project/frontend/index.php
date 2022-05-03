@@ -36,7 +36,9 @@
                 <h3 class="mb-3 mb-md-0">Hier kann man sich einloggen oder sich einen Account erstellen</h3>
                 
                 <div class="input-group news-input">
-                    <button class="btn btn-dark btn-lg" type="button">Login</button>
+                <button type="button" class="btn btn-dark btn-lg" data-bs-toggle="modal" data-bs-target="#loginModal">
+                Login
+              </button>
                   </div>
             </div>
         </div>
