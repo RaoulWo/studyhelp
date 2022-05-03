@@ -55,8 +55,25 @@ class Game {
         }
         this.changeToGameView();
         this.startTimer();
-        // Perform AJAX-call
-        nextQuestion();
+        this.loadNextQuestion();
+    }
+    loadNextQuestion() {
+        hideGameCards();
+        this.changeColorToGrey();
+        if (this.time > -1) {
+            setTimeout(function () {
+                loadVocabulary(getSelectedLanguage());
+                $("#gameCards").fadeIn(100);
+            }, 100);
+        }
+    }
+    changeColorToGrey() {
+        for (let i = 1; i < 5; ++i) {
+            let id = "#answer" + i + "Body";
+            $(id).removeClass("bg-success");
+            $(id).removeClass("bg-danger");
+            $(id).addClass("bg-secondary");
+        }
     }
     hideStartingElements() {
         fadeOutGameStart();
@@ -115,11 +132,25 @@ class Game {
     renderTime(time) {
         $("#timer").text(time);
     }
+    isAnswerRight(id) {
+        return $("#question").text() == $(id).data("german");
+    }
+    checkAnswer(id) {
+        if (this.isAnswerRight(id)) {
+            this.correctAnswers++;
+        }
+        else {
+            this.incorrectAnswers++;
+        }
+    }
+    renderPoints(num) {
+        $("#points").text(num);
+    }
 }
 // ######## Global Variables #########
 let correctAnswers = 0;
 let incorrectAnswers = 0;
-let time = 0; // zeile 46 um zeit einzustellen
+let gameTime = 0; // zeile 46 um zeit einzustellen
 // ######## Function Definitions ########
 // **** Game Loop ****
 // Starts the game, used for onclick-event
@@ -151,7 +182,7 @@ function startGame() {
     gameTime = 30;
     startTimer();
     // Perform AJAX-call
-    nextQuestion();
+    loadNextQuestion();
 }
 // Stops the game when timer reaches 0
 function stopGame() {
@@ -175,10 +206,10 @@ function checkAnswer(id) {
     }
     return $("#question").text() == $(id).data("german");
 }
-function updatePoints(num) {
+function renderPoints(num) {
     $("#points").text(num);
 }
-function nextQuestion() {
+function loadNextQuestion() {
     //$("#gameCards").fadeOut(200);
     hideGameCards();
     for (let i = 1; i < 5; ++i) {
@@ -366,9 +397,9 @@ $("#answer1Container").on("click", function () {
             pts = 0;
         }
     }
-    updatePoints(pts);
+    renderPoints(pts);
     setTimeout(function () {
-        nextQuestion();
+        loadNextQuestion();
     }, 300);
 });
 $("#answer2Container").on("click", function () {
@@ -385,9 +416,9 @@ $("#answer2Container").on("click", function () {
             pts = 0;
         }
     }
-    updatePoints(pts);
+    renderPoints(pts);
     setTimeout(function () {
-        nextQuestion();
+        loadNextQuestion();
     }, 300);
 });
 $("#answer3Container").on("click", function () {
@@ -404,9 +435,9 @@ $("#answer3Container").on("click", function () {
             pts = 0;
         }
     }
-    updatePoints(pts);
+    renderPoints(pts);
     setTimeout(function () {
-        nextQuestion();
+        loadNextQuestion();
     }, 300);
 });
 $("#answer4Container").on("click", function () {
@@ -423,9 +454,9 @@ $("#answer4Container").on("click", function () {
             pts = 0;
         }
     }
-    updatePoints(pts);
+    renderPoints(pts);
     setTimeout(function () {
-        nextQuestion();
+        loadNextQuestion();
     }, 300);
 });
 $("#gameResultsBtn").on("click", function () {

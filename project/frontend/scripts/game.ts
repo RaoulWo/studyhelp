@@ -59,8 +59,27 @@ class Game {
     }
     this.changeToGameView();
     this.startTimer();
-    // Perform AJAX-call
-    nextQuestion();
+    this.loadNextQuestion();
+  }
+
+  private loadNextQuestion(): void {
+    hideGameCards();
+    this.changeColorToGrey();
+    if (this.time > -1) {
+      setTimeout(function() {
+        loadVocabulary(getSelectedLanguage());
+        $("#gameCards").fadeIn(100);
+      }, 100);
+    }
+  }
+
+  private changeColorToGrey(): void {
+    for(let i = 1; i < 5; ++i) {
+      let id = "#answer" + i + "Body";
+      $(id).removeClass("bg-success");    
+      $(id).removeClass("bg-danger");
+      $(id).addClass("bg-secondary");
+    }
   }
 
   private hideStartingElements(): void {
@@ -129,7 +148,24 @@ class Game {
     $("#timer").text(time);
   }
 
+  private isAnswerRight(id: string): boolean {
+    return $("#question").text() == $(id).data("german");
+  }
 
+  private checkAnswer(id : string): void {
+    if (this.isAnswerRight(id)) {
+      this.correctAnswers++;
+    }
+    else {
+      this.incorrectAnswers++;
+    }
+  }
+  
+  private renderPoints(num : number): void {
+    $("#points").text(num);
+  }
+
+  
 
 
 
@@ -197,14 +233,8 @@ function startGame() : void {
   gameTime = 30;
   startTimer();
   // Perform AJAX-call
-  nextQuestion();
+  loadNextQuestion();
 }
-
-
-
-
-
-
 
 // Stops the game when timer reaches 0
 function stopGame() : void {
@@ -230,11 +260,11 @@ function checkAnswer(id : string) : boolean { // checks the answer, returns true
   return $("#question").text() == $(id).data("german");
 }
 
-function updatePoints(num : number) : void {
+function renderPoints(num : number) : void {
   $("#points").text(num);
 }
 
-function nextQuestion() : void {
+function loadNextQuestion() : void {
   //$("#gameCards").fadeOut(200);
   hideGameCards();
   for(let i = 1; i < 5; ++i) {
@@ -461,9 +491,9 @@ $("#answer1Container").on("click", function() {
       pts = 0;
     }
   }
-  updatePoints(pts);
+  renderPoints(pts);
   setTimeout(function() {
-    nextQuestion();
+    loadNextQuestion();
   }, 300);
 });
 
@@ -481,9 +511,9 @@ $("#answer2Container").on("click", function() {
       pts = 0;
     }
   }
-  updatePoints(pts);
+  renderPoints(pts);
   setTimeout(function() {
-    nextQuestion();
+    loadNextQuestion();
   }, 300);
 });
 
@@ -501,9 +531,9 @@ $("#answer3Container").on("click", function() {
       pts = 0;
     }
   }
-  updatePoints(pts);
+  renderPoints(pts);
   setTimeout(function() {
-    nextQuestion();
+    loadNextQuestion();
   }, 300);
 });
 
@@ -521,9 +551,9 @@ $("#answer4Container").on("click", function() {
       pts = 0;
     }
   }
-  updatePoints(pts);
+  renderPoints(pts);
   setTimeout(function() {
-    nextQuestion();
+    loadNextQuestion();
   }, 300);
 });
 
