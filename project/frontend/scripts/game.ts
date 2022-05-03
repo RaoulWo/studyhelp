@@ -1,14 +1,165 @@
-// #### jQuery DOM has finished loading ####
+// jQuery DOM has finished loading
 $(function() {
   hideTimer();
   hideGameCards();
   hideResults();
 });
 
+const STARTING_GAME_TIME_SECONDS = 30;
+const FADING_TIME_MS = 500;
+
+class Game {
+  private _time: number  = STARTING_GAME_TIME_SECONDS;
+  private _points: number = 0;
+  private _correctAnswers: number = 0;
+  private _incorrectAnswers: number = 0;
+
+  get time() {
+    return this._time;
+  }
+  set time(time) {
+    this._time = time;
+    if (this._time < 0)
+      this._time = 0;
+  }
+
+  get points() {
+    return this._points;
+  }
+  set points(points) {
+    this._points = points;
+    if (this._points < 0) {
+      this._points = 0;
+    }
+  }
+
+  get correctAnswers() {
+    return this._correctAnswers;
+  }
+  set correctAnswers(num) {
+    this._correctAnswers = num;
+    if (this._correctAnswers < 0)
+      this._correctAnswers = 0;
+  }
+
+  get incorrectAnswers() {
+    return this._incorrectAnswers;
+  }
+  set incorrectAnswers(num) {
+    this._incorrectAnswers = num;
+    if (this._incorrectAnswers < 0)
+      this._incorrectAnswers = 0;
+  }
+
+  public start(): void {
+    this.hideStartingElements();
+    if (!isLanguageSelected()) {
+      this.throwErrorAndReturnToLanguageSelect();
+      return;
+    }
+    this.changeToGameView();
+    this.startTimer();
+    // Perform AJAX-call
+    nextQuestion();
+  }
+
+  private hideStartingElements(): void {
+    fadeOutGameStart();
+    fadeOutGameImg();
+  }
+
+  private changeToGameView(): void {
+    fadeOutGameShowcase();
+    fadeOutLanguageSelect();
+    setTimeout(function() {
+      fadeInTimer();
+      fadeInGameCards();
+    }, FADING_TIME_MS);
+  }
+
+  private throwErrorAndReturnToLanguageSelect(): void {
+    createErrorMessage("Wähle zuerst eine Sprache aus!");
+    setTimeout(function() {
+      fadeInGameError();
+    }, FADING_TIME_MS);
+    setTimeout(function() {
+      fadeOutGameError();
+    }, FADING_TIME_MS * 5);
+    setTimeout(function() {
+      fadeInGameStart();
+      fadeInGameImg();
+    }, FADING_TIME_MS * 6);
+  }
+
+  private stop(): void {
+    this.hideGameElements();
+    setTimeout(function(this: any) {
+      this.updateGameResults();
+      fadeInGameResults();
+    }, FADING_TIME_MS);
+  } 
+
+  private hideGameElements(): void {
+    fadeOutGameCards();
+    fadeOutTimer();
+  }
+
+  private updateGameResults() {
+    $("#pointsGathered").text(this.points);
+    $("#correctAnswers").text(this.correctAnswers);
+    $("#incorrectAnswers").text(this.incorrectAnswers);
+  }
+
+  private startTimer(): void {
+    let timerReference = setInterval(function(this: any) {
+      this.renderTime(this.time);
+      this.time--;
+      if (this.time <= 0) {
+        this.stopTimer(timerReference);
+        this.stop();
+      }
+    }, 1000);
+  }
+
+  private stopTimer(ref: NodeJS.Timer): void {
+    clearInterval(ref);
+  }
+
+  private renderTime(time: number): void {
+    $("#timer").text(time);
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 // ######## Global Variables #########
 let correctAnswers = 0;
 let incorrectAnswers = 0;
-let time = 0; // zeile 46 um zeit einzustellen
+let gameTime = 0; // zeile 46 um zeit einzustellen
 
 // ######## Function Definitions ########
 
@@ -17,21 +168,21 @@ let time = 0; // zeile 46 um zeit einzustellen
 function startGame() : void {
   fadeOutGameStart();
   fadeOutGameImg();
-  if (!languageSelected()) { // Print error-message
+  if (!isLanguageSelected()) { // Print error-message
     createErrorMessage("Wähle zuerst eine Sprache aus!");
 
     setTimeout(function() {
       fadeInGameError();
-    }, FADING_TIME);
+    }, FADING_TIME_MS);
     
     setTimeout(function() {
       fadeOutGameError();
-    }, FADING_TIME * 5);
+    }, FADING_TIME_MS * 5);
 
     setTimeout(function() {
       fadeInGameStart();
       fadeInGameImg();
-    }, FADING_TIME * 6);
+    }, FADING_TIME_MS * 6);
     return;
   }
   // FadeOut LanguageSelect, FadeIn Timer
@@ -40,14 +191,20 @@ function startGame() : void {
   setTimeout(function() {
     fadeInTimer();
     fadeInGameCards();
-  }, FADING_TIME);
+  }, FADING_TIME_MS);
 
   // Start Timer
-  time = 30;
-  startGameTime();
+  gameTime = 30;
+  startTimer();
   // Perform AJAX-call
   nextQuestion();
 }
+
+
+
+
+
+
 
 // Stops the game when timer reaches 0
 function stopGame() : void {
@@ -57,8 +214,8 @@ function stopGame() : void {
     $("#pointsGathered").text($("#points").text());
     $("#correctAnswers").text(correctAnswers);
     $("#incorrectAnswers").text(incorrectAnswers);
-    fadeInResults();
-  }, FADING_TIME);
+    fadeInGameResults();
+  }, FADING_TIME_MS);
 }
 
 function checkAnswer(id : string) : boolean { // checks the answer, returns true if answered correctly
@@ -86,9 +243,9 @@ function nextQuestion() : void {
     $(id).removeClass("bg-danger");
     $(id).addClass("bg-secondary");
   }
-  if(time > -1) {
+  if(gameTime > -1) {
     setTimeout(function() {
-      loadVocabulary(getLanguage());
+      loadVocabulary(getSelectedLanguage());
       $("#gameCards").fadeIn(100);
     }, 100);
   }
@@ -130,11 +287,11 @@ function loadVocabulary(language : string) : void {
 }
 
 // **** Timer **** 
-function startGameTime() : void {
+function startTimer() : void {
   let timerId = setInterval(function() {
-    $("#timer").text(time);
-    time--;
-    if (time < 0) {
+    $("#timer").text(gameTime);
+    gameTime--;
+    if (gameTime < 0) {
       clearInterval(timerId);
       stopGame();
     }
@@ -154,73 +311,55 @@ function createErrorMessage(message : string) : void {
 } 
 
 // **** Checking the selected language ****
-// Checks if a language has been selected
-function languageSelected() : boolean {
-  if ($("#english").is(":checked")) { // is(":checked") ist Bootstrap-spezifisch, um zu checken, ob checkbox gewählt wurde
-    return true;
-  }
-  if ($("#spanish").is(":checked")) {
-    return true;
-  }
-  if ($("#french").is(":checked")) {
-    return true;
-  }
-  if ($("#russian").is(":checked")) {
-    return true;
-  }
-  return false;
+function isLanguageSelected() : boolean {
+  return isEnglishSelected() || isSpanishSelected() || isFrenchSelected() || isRussianSelected();
 }
 
-function englishSelected() : boolean {
+function isEnglishSelected() : boolean {
   return $("#english").is(":checked");
 }
 
-function spanishSelected() : boolean {
+function isSpanishSelected() : boolean {
   return $("#spanish").is(":checked");
 }
 
-function frenchSelected() : boolean {
+function isFrenchSelected() : boolean {
   return $("#french").is(":checked");
 }
 
-function russianSelected() : boolean {
+function isRussianSelected() : boolean {
   return $("#russian").is(":checked");
 }
 
-function getLanguage() : string {
-  let language : string = ""; // selected language for ajax-call parameter
-  if (englishSelected()) {
-    language = "english";
-  }
-  else if (spanishSelected()) {
-    language = "spanish";
-  }
-  else if (frenchSelected()) {
-    language = "french";
-  }
-  else if (russianSelected()) {
-    language = "russian";
-  }
-  return language;
+function getSelectedLanguage() : string {
+  if (isEnglishSelected())
+    return "english";
+  else if (isSpanishSelected())
+    return "spanish";
+  else if (isFrenchSelected())
+    return "french";
+  else if (isRussianSelected())
+    return "russian";
+  else 
+    return "";
 }
 
 // **** FadeIn, FadeOut, Hide ****
-const FADING_TIME = 500;
 
 function fadeOutGameShowcase() : void {
-  $("#gameShowcase").fadeOut(FADING_TIME);
+  $("#gameShowcase").fadeOut(FADING_TIME_MS);
 }
 
 function fadeInGameShowcase() : void {
-  $("#gameShowcase").fadeIn(FADING_TIME);
+  $("#gameShowcase").fadeIn(FADING_TIME_MS);
 }
 
 function fadeOutLanguageSelect() : void {
-  $("#languageContainer").fadeOut(FADING_TIME);
+  $("#languageContainer").fadeOut(FADING_TIME_MS);
 }
 
 function fadeInLanguageSelect() : void {
-  $("#languageContainer").fadeIn(FADING_TIME);
+  $("#languageContainer").fadeIn(FADING_TIME_MS);
 }
 
 function hideTimer() : void {
@@ -228,28 +367,28 @@ function hideTimer() : void {
 }
 
 function fadeOutTimer() : void {
-  $("#timerContainer").fadeOut(FADING_TIME);
+  $("#timerContainer").fadeOut(FADING_TIME_MS);
 }
 
 function fadeInTimer() : void {
   $("#timerContainer").removeClass("d-none");
-  $("#timerContainer").fadeIn(FADING_TIME);
+  $("#timerContainer").fadeIn(FADING_TIME_MS);
 }
 
 function fadeOutGameStart() : void {
-  $("#gameStart").fadeOut(FADING_TIME);
+  $("#gameStart").fadeOut(FADING_TIME_MS);
 }
 
 function fadeInGameStart() : void {
-  $("#gameStart").fadeIn(FADING_TIME);
+  $("#gameStart").fadeIn(FADING_TIME_MS);
 }
 
 function fadeOutGameError() : void {
-  $("#gameError").fadeOut(FADING_TIME);
+  $("#gameError").fadeOut(FADING_TIME_MS);
 }
 
 function fadeInGameError() : void {
-  $("#gameError").fadeIn(FADING_TIME);
+  $("#gameError").fadeIn(FADING_TIME_MS);
 }
 
 function hideGameCards() : void {
@@ -258,35 +397,35 @@ function hideGameCards() : void {
 
 function fadeInGameCards() : void {
   $("#gameCards").removeClass("d-none");
-  $("#gameCards").fadeIn(FADING_TIME);
+  $("#gameCards").fadeIn(FADING_TIME_MS);
 }
 
 function fadeOutGameCards() : void {
-  $("#gameCards").fadeOut(FADING_TIME);
+  $("#gameCards").fadeOut(FADING_TIME_MS);
 }
 
 function fadeOutGameImg() : void {
   $("#gameImg").removeClass("d-none");
   $("#gameImg").removeClass("d-sm-block");
-  $("#gameImg").fadeOut(FADING_TIME);
+  $("#gameImg").fadeOut(FADING_TIME_MS);
 }
 
 function fadeInGameImg() : void {
   $("#gameImg").addClass("d-none");
   $("#gameImg").addClass("d-sm-block");
-  $("#gameImg").fadeIn(FADING_TIME);
+  $("#gameImg").fadeIn(FADING_TIME_MS);
 }
 
 function hideResults() : void {
   $("#gameResults").hide();
 }
 
-function fadeInResults() : void {
-  $("#gameResults").fadeIn(FADING_TIME);
+function fadeInGameResults() : void {
+  $("#gameResults").fadeIn(FADING_TIME_MS);
 }
 
 function fadeOutResults() : void {
-  $("#gameResults").fadeOut(FADING_TIME);
+  $("#gameResults").fadeOut(FADING_TIME_MS);
 }
 
 // **** Other Functions ****
@@ -395,7 +534,7 @@ $("#gameResultsBtn").on("click", function() {
     fadeInLanguageSelect();
     fadeInGameImg();
     fadeInGameStart();
-  }, FADING_TIME);
+  }, FADING_TIME_MS);
   correctAnswers = 0;
   incorrectAnswers = 0;
 });
