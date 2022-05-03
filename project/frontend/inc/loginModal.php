@@ -36,10 +36,10 @@
 
 
       <!-- registrationForm -->
-      <form method="POST" action="" id="registrationForm" class="was-validated">
+      <form method="POST" action="dbacess.php" id="registrationForm" class="was-validated">
         <div class="p-3">
           <div class="form-floating my-3">
-            <input type="text" class="form-control" name="user" id="usernameRegister" placeholder="Username" required>
+            <input type="text" class="form-control" name="username" id="usernameRegister" placeholder="Username" required>
             <label for="usernameRegister">Username</label>
 
             <div class="valid-feedback"></div>
@@ -55,7 +55,7 @@
           </div>
 
           <div class="form-floating my-3">
-            <input type="password" class="form-control" name="password" id="passwordRegister" placeholder="Passwort" required>
+            <input type="password" class="form-control" name="password_1" id="passwordRegister" placeholder="Passwort" required>
             <label for="passwordRegister">Passwort</label>
 
             <div class="valid-feedback"></div>
@@ -63,15 +63,14 @@
           </div>
 
           <div class="form-floating my-3">
-            <input type="password" class="form-control" name="repeatPassword" id="repeatPasswortRegister" placeholder="Passwort wiederholen" required>
+            <input type="password" class="form-control" name="password_2" id="repeatPasswortRegister" placeholder="Passwort wiederholen" required>
             <label for="repeatPasswordRegister">Passwort wiederholen</label>
 
             <div class="valid-feedback"></div>
             <div class="invalid-feedback"></div>
           </div>
 
-          <button id="submitRegister" class="btn btn-primary mt-3" type="submit">Registrieren</button>
-
+          <button id="submitRegister" class="btn btn-primary mt-3" type="submit" name="reg_user">Registrieren</button>
         </div>
       </form>
 
