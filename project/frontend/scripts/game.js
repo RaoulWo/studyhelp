@@ -8,7 +8,7 @@ $(function () {
 // ######## Global Variables #########
 let correctAnswers = 0;
 let incorrectAnswers = 0;
-let time = 0;
+let time = 0; // zeile 46 um zeit einzustellen
 // ######## Function Definitions ########
 // **** Game Loop ****
 // Starts the game, used for onclick-event
