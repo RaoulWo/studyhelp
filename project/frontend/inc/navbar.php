@@ -22,7 +22,7 @@
 
 
 
-    <nav class="navbar navbar-expand-sm bg-dark navbar-dark fixed-top">
+    <nav class="navbar navbar-expand-sm bg-dark navbar-dark sticky-top">
         <div class="container-fluid">
         <a href="<?php echo $link0; ?>" class="navbar-brand"><?php echo '<i class="fa-solid fa-graduation-cap"></i>' . ' ' . $name0; ?></a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
@@ -61,8 +61,11 @@
             </ul>
           </div>
           <form class="d-flex">
-              <a class="btn btn-success" href="link" type="login.php"><?php echo $name12; ?></a>
-            </form>
+              <!-- Button trigger modal -->
+              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#loginModal">
+                <?php echo $name12; ?>
+              </button>
+          </form>
             <form class="d-flex">
               <a class="btn btn-info" href="link" type="register.php"><?php echo $name13; ?></a>
             
@@ -70,3 +73,5 @@
         </div>
        
         </nav>
+
+
