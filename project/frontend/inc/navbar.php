@@ -62,7 +62,7 @@
           </div>
           <form class="d-flex">
               <!-- Button trigger modal -->
-              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#loginModal">
+              <button type="button" id="loginModalToggler" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#loginModal">
                 <?php echo $name12; ?>
               </button>
           </form>

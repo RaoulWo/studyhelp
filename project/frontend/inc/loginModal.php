@@ -3,9 +3,10 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="loginMode">Login</h5>
-        <h5 class="modal-title">&nbsp;|&nbsp;</h5>
-        <h5 class="modal-title" id="registrationMode">Registrierung</h5>
+        <div>
+        <h5 class="modal-title p-2 me-2" id="loginMode">Login</h5>
+        </div>
+        <div><h5 class="modal-title p-2" id="registrationMode">Registrierung</h5></div>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
@@ -31,13 +32,9 @@
       </form>
 
 
-
-
-
-
       <!-- registrationForm -->
-      <form method="POST" action="" id="registrationForm" class="was-validated">
-        <div class="p-3">
+      <form method="POST" action="" class="was-validated">
+        <div class="p-3" id="registrationForm">
           <div class="form-floating my-3">
             <input type="text" class="form-control" name="user" id="usernameRegister" placeholder="Username" required>
             <label for="usernameRegister">Username</label>
@@ -72,6 +69,8 @@
 
           <button id="submitRegister" class="btn btn-primary mt-3" type="submit">Registrieren</button>
 
+
+
         </div>
       </form>
 
@@ -84,5 +83,7 @@
     </div>
   </div>
 </div>
+
+
 
 
