@@ -3,3 +3,18 @@
         width: 50%;
     }
 }
+
+
+.activeModeForLoginModal {
+    color: #2470e2;
+    outline: none;
+    border-color: #9ecaed;
+    box-shadow: 0 0 10px #9ecaed;
+}
+
+
+.inactiveModeForLoginModal {
+    color: #363636;
+    border: 2px solid #dadada;
+    border-radius: 7px;
+}
