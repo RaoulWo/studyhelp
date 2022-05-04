@@ -52,7 +52,6 @@ if (isset($_POST['reg_user'])) {
       mysqli_query($db, $query);
 
       $_SESSION['sucess'] = "Neuer Benutzer wurde angelegt";
-      header('location: index.php');
     }
     //Wenn der usertyp nicht extra angebeben wird (normale registration) wird kein Benutzertyp gespeichert.
     //Benutzertyp NULL = Gast
@@ -64,9 +63,8 @@ if (isset($_POST['reg_user'])) {
       $user_check_query = "SELECT * FROM user WHERE username='$username' OR email='$email' LIMIT 1";
       $result = mysqli_query($db, $user_check_query);
       $benutzer = mysqli_fetch_assoc($result);
-      $_SESSION['benutzer'] = $user;
+      $_SESSION['benutzer'] = $benutzer;
       $_SESSION['success'] = "Sie sind jetzt eingelogged!";
-      header('location: index.php');
     }
   }
 }
@@ -76,7 +74,7 @@ if (isset($_POST['login_user'])) {
     $username = mysqli_real_escape_string($db, $_POST['username']);
     $password = mysqli_real_escape_string($db, $_POST['password']);
   
-    if (empty($user)) {
+    if (empty($username)) {
         array_push($errors, "Bitte geben Sie Ihren Benutzernamen ein!");
     }
     if (empty($password)) {
@@ -92,19 +90,13 @@ if (isset($_POST['login_user'])) {
 
       if (mysqli_num_rows($results) == 1) {
         $benutzer = mysqli_fetch_assoc($results);
-        if ($benutzer['status'] == 1){
-          $_SESSION['user'] = $benutzer;
-          $_SESSION['success'] = "Sie sind jetzt eingelogged!";
-          header('location: index.php');
-        }
-        else {
-          array_push($errors, "Ihr Benutzer Account ist derzeit deaktiviert");
-        }
+        $_SESSION['benutzer'] = $benutzer;
+        $_SESSION['success'] = "Sie sind jetzt eingelogged!";
       }
       else {
           array_push($errors, "Falscher Username oder falsches Passwort oder Account deaktiviert. Bitte versuchen Sie es erneut!");
       }
-  }
+    }
   }
 
 //Benutzerdaten ändern

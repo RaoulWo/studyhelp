@@ -1,3 +1,13 @@
+<?php
+    include_once('inc/dbacess.php');
+    include_once('inc/errors.php');
+    print_r($_SESSION);
+    if (isset($_GET['logout'])) {
+        session_destroy();
+        unset($_SESSION['benutzer']);
+    }
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>

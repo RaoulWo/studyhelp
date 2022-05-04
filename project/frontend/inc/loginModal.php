@@ -15,11 +15,11 @@
 
 
       <!-- loginForm -->
-      <form method="POST" action="dbacess.php" id="loginForm">
+      <form method="POST" action="<?php htmlspecialchars($_SERVER['PHP_SELF']) ?>" id="loginForm">
         <div class="p-3">
           <div class="form-floating my-3">
-            <input type="text" class="form-control" name="user" id="usernameEmailLogin" placeholder="Username oder Email" required>
-            <label for="usernameEmailLogin">Username oder Email</label>
+            <input type="text" class="form-control" name="username" id="usernameEmailLogin" placeholder="Username oder Email" required>
+            <label for="username">Username oder Email</label>
           </div>
 
           <div class="form-floating my-3">
@@ -27,13 +27,13 @@
             <label for="passwordLogin">Passwort</label>
           </div>
 
-          <button id="submitLogin" class="btn btn-primary mt-3" type="submit">Einloggen</button>
+          <button id="submitLogin" class="btn btn-primary mt-3" type="submit" name="login_user">Einloggen</button>
         </div>
       </form>
 
 
       <!-- registrationForm -->
-      <form method="POST" action="dbacess.php" id="registrationForm" class="was-validated">
+      <form method="POST" action="<?php htmlspecialchars($_SERVER['PHP_SELF']) ?>" id="registrationForm" class="was-validated">
         <div class="p-3">
           <div class="form-floating my-3">
             <input type="text" class="form-control" name="username" id="usernameRegister" placeholder="Username" required>
@@ -70,10 +70,7 @@
           <button id="submitRegister" class="btn btn-primary mt-3" type="submit" name="reg_user">Registrieren</button>
         </div>
       </form>
-
-       
       </div>
-
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
       </div>
