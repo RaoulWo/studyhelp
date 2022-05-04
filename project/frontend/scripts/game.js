@@ -5,7 +5,7 @@ $(function () {
     hideGameCards();
     hideResults();
 });
-const STARTING_GAME_TIME_SECONDS = 60;
+const STARTING_GAME_TIME_SECONDS = 5;
 const FADING_TIME_MS = 500;
 class Game {
     constructor() {
@@ -198,6 +198,9 @@ function sendResultsToBackend(points) {
         success: function (response) {
             console.log("Success, AJAX call for 'insertGameResultsIntoDatabase' made");
             console.log(response);
+            $("#gameUser").text(response["username"]);
+            $("#gameLevel").text(response["level"]);
+            $("#gamePunkte").text(1000 - response["points"]);
         },
         error: function (response) {
             console.log("Error, AJAX call for 'insertGameResultsIntoDatabase' failed");

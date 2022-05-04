@@ -81,7 +81,6 @@ class DataHandler
     public function insertGameResultsIntoDatabase($points) {
         $dbConnection = $this->openUserConnection();
         if(!$dbConnection) { // if connection failed return null
-
             return "ERROR NO DB CONNECTION";
         }
 
@@ -90,18 +89,31 @@ class DataHandler
         }
         
         $id = $_SESSION["benutzer"]["id"];
-        $pts = $points;
         $username = $_SESSION["benutzer"]["username"];
 
-        $insertResultsStatement = "INSERT INTO gameresults (fk_user_id, punkte) VALUES ($id, $pts)";
+        $insertResultsStatement = "INSERT INTO gameresults (fk_user_id, punkte) VALUES ($id, $points)";
         $sqlQuery = $dbConnection->query($insertResultsStatement);
-
         
-        //$getLevelAndPoints = "SELECT level"
+        $getLevelAndPoints = "SELECT level, punkte FROM user WHERE id = $id";
+        $sqlQuery = $dbConnection->query($getLevelAndPoints);
+        $result = $sqlQuery->fetch_assoc();
+
+        $oldLvl = $result["level"];
+        $oldPoints = $result["punkte"];
 
 
+        $newPoints = $oldPoints + $points;
+        $pointsRemaining = $newPoints % 1000;
+        $levelsGained = intdiv($newPoints, 1000);
+        $newLvl = $oldLvl + $levelsGained;
 
-        return new GameResult($username, $pts);
+        $updateLevels = "UPDATE user SET level = $newLvl WHERE id = $id";
+        $sqlQuery = $dbConnection->query($updateLevels);
+
+        $updatePoints = "UPDATE user SET punkte = $pointsRemaining WHERE id = $id";
+        $sqlQuery = $dbConnection->query($updatePoints);
+
+        return new GameResult($username, $pointsRemaining, $newLvl);
     }
 
 

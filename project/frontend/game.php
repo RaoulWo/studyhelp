@@ -161,6 +161,8 @@
           <p class="text-sm-start text-center"><i class="fa-solid fa-coins"></i> <span id="pointsGathered"></span> Punkte</p>
           <p class="text-sm-start text-center"><i class="bi bi-check-circle"></i> <span id="correctAnswers"></span> richtig beantwortet</p>
           <p class="text-sm-start text-center"><i class="bi bi-x-circle"></i> <span id="incorrectAnswers"></span> falsch beantwortet</p>
+          <p class="text-sm-start text-center">Glückwunsch <span id="gameUser"></span>! Du hast Level <span id="gameLevel"></span> erreicht, dir fehlen noch 
+          <span id="gamePunkte"></span> Punkte für das nächste Level!</p>
         </div>
         <button id="gameResultsBtn" class="btn btn-outline-warning">Schließen</button>
       </div>
