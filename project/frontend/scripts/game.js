@@ -130,6 +130,7 @@ class Game {
             $("#correctAnswers").text(correct); // Wenn ich die Attribute direkt reinschreibe steht [HTMLSpanElement] ?
             $("#incorrectAnswers").text(incorrect);
             fadeInGameResults();
+            sendResultsToBackend(Number($("#points").text()));
         }, FADING_TIME_MS);
     }
     hideGameElements() {
@@ -141,8 +142,9 @@ class Game {
     }
 }
 // ######## Event Listeners ########
-let game = new Game();
+let game = null;
 $("#gameStart").on("click", function () {
+    game = new Game();
     game.start();
 });
 for (let i = 1; i <= 4; ++i) {
@@ -182,6 +184,23 @@ function loadVocabulary(language) {
         },
         error: function (response) {
             console.log("Error, AJAX call for 'queryRandomVocabByLanguage' failed");
+            console.log(response);
+        }
+    });
+}
+function sendResultsToBackend(points) {
+    $.ajax({
+        type: "GET",
+        url: "../backend/serviceHandler.php",
+        cache: false,
+        data: { method: "insertGameResultsIntoDatabase", param: points },
+        dataType: "json",
+        success: function (response) {
+            console.log("Success, AJAX call for 'insertGameResultsIntoDatabase' made");
+            console.log(response);
+        },
+        error: function (response) {
+            console.log("Error, AJAX call for 'insertGameResultsIntoDatabase' failed");
             console.log(response);
         }
     });

@@ -1,5 +1,9 @@
 <?php
+session_start();
+
+
 // Include Models
+include("./models/gameResult.php");
 include("./models/vocabPair.php");
 include("./models/spanish.php");
 
@@ -8,7 +12,7 @@ class DataHandler
 {
     // #### Public Methods ####
     public function queryRandomVocabByLanguage($language) {
-        $dbConnection = $this->openDbConnection();
+        $dbConnection = $this->openVocabConnection();
         if(!$dbConnection) { // if connection failed return null
             return null;
         }
@@ -49,9 +53,6 @@ class DataHandler
         return $result;
     }
 
-
-
-
     public function queryVocabList() {
         $res =  $this->getDemoData();
         return $res;
@@ -77,10 +78,46 @@ class DataHandler
         return $result;
     }
 
+    public function insertGameResultsIntoDatabase($points) {
+        $dbConnection = $this->openUserConnection();
+        if(!$dbConnection) { // if connection failed return null
+
+            return "ERROR NO DB CONNECTION";
+        }
+
+        if (!isset($_SESSION["benutzer"])) {
+            return "NO USER LOGGED IN";
+        }
+        
+        $id = $_SESSION["benutzer"]["id"];
+        $pts = $points;
+        $username = $_SESSION["benutzer"]["username"];
+
+        $insertResultsStatement = "INSERT INTO gameresults (fk_user_id, punkte) VALUES ($id, $pts)";
+        $sqlQuery = $dbConnection->query($insertResultsStatement);
+
+        
+        //$getLevelAndPoints = "SELECT level"
+
+
+
+        return new GameResult($username, $pts);
+    }
+
+
     // #### Private Methods ####
-    private function openDbConnection() { // returns false if connection failed, else returns mysqli-object
+    private function openVocabConnection() { // returns false if connection failed, else returns mysqli-object
         require_once("db/config/dbaccess.php");
         $dbConnection = new mysqli($host, $user, $password, $database);
+        if($dbConnection->connect_error) {
+            return false;
+        }
+        return $dbConnection;
+    }
+
+    private function openUserConnection() { // returns false if connection failed, else returns mysqli-object
+        require_once("db/config/dbaccess2.php");
+        $dbConnection = new mysqli($host2, $user2, $password2, $database2);
         if($dbConnection->connect_error) {
             return false;
         }

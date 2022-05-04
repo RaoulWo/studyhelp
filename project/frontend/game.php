@@ -1,3 +1,9 @@
+<?php session_start(); 
+  print_r($_SESSION);
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -160,6 +166,8 @@
       </div>
     </div>
   </section>
+
+  <?php include ("inc/loginModal.php"); ?>
     
   <!-- jQuery -->
   <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>

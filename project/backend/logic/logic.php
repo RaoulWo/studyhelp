@@ -26,6 +26,10 @@ class Logic
                 break;
             case "queryVocabByWord":
                 $res = $this->dh->queryVocabByWord($param);
+                break;
+            case "insertGameResultsIntoDatabase":
+                $res = $this->dh->insertGameResultsIntoDatabase($param);
+                break;
             default:
                 $res = null;
                 break;
