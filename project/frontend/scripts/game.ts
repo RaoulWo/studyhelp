@@ -147,10 +147,6 @@ class Game {
     }, FADING_TIME_MS);
   } 
 
-  
-
-
-
   private hideGameElements(): void {
     fadeOutGameCards();
     fadeOutTimer();
@@ -236,9 +232,6 @@ function sendResultsToBackend(points: number): void {
     }
   });
 }
-
-
-
 
 
 

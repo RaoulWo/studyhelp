@@ -4,7 +4,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <div>
-        <h5 class="modal-title p-2 me-2" id="loginMode">Login</h5>
+        <h5 class="modal-title p-2 me-3" id="loginMode">Login</h5>
         </div>
         <div><h5 class="modal-title p-2" id="registrationMode">Registrierung</h5></div>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>

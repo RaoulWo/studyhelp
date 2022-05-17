@@ -1,6 +1,11 @@
-<?php session_start(); 
+<?php 
+  include_once('inc/dbacess.php');
+  include_once('inc/errors.php');
   print_r($_SESSION);
-
+  if (isset($_GET['logout'])) {
+      session_destroy();
+      unset($_SESSION['benutzer']);
+  } 
 ?>
 
 
@@ -161,15 +166,21 @@
           <p class="text-sm-start text-center"><i class="fa-solid fa-coins"></i> <span id="pointsGathered"></span> Punkte</p>
           <p class="text-sm-start text-center"><i class="bi bi-check-circle"></i> <span id="correctAnswers"></span> richtig beantwortet</p>
           <p class="text-sm-start text-center"><i class="bi bi-x-circle"></i> <span id="incorrectAnswers"></span> falsch beantwortet</p>
+          <?php if (isset($_SESSION['benutzer'])) { ?>
           <p class="text-sm-start text-center">Glückwunsch <span id="gameUser"></span>! Du hast Level <span id="gameLevel"></span> erreicht, dir fehlen noch 
           <span id="gamePunkte"></span> Punkte für das nächste Level!</p>
+          <?php } ?>
         </div>
         <button id="gameResultsBtn" class="btn btn-outline-warning">Schließen</button>
       </div>
     </div>
   </section>
 
-  <?php include ("inc/loginModal.php"); ?>
+  <!-- Include loginModal -->
+  <?php include_once("inc/loginModal.php"); ?>
+
+  <!-- JavaScript for LoginModal -->
+  <script src="scripts/loginModal.js"></script>
     
   <!-- jQuery -->
   <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
