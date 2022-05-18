@@ -30,6 +30,9 @@ class Logic
             case "insertGameResultsIntoDatabase":
                 $res = $this->dh->insertGameResultsIntoDatabase($param);
                 break;
+            case "queryGameStatisticsByUser":
+                $res = $this->dh->queryGameStatisticsByUser();
+                break;
             default:
                 $res = null;
                 break;

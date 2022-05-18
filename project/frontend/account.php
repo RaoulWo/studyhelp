@@ -48,8 +48,17 @@
         </div>
     </section>
 
+
+
+
+
+
+
+
+
+
     <!-- Container for GameResults -->
-    <section class="p-4 bg-light">
+    <section class="p-4 pt-5 bg-light">
         <div class="container">
             <div class="mb-4">
                 <h1 class="text-sm-start text-center"><span class="badge bg-dark text-light"><i
@@ -68,6 +77,9 @@
 
     <!-- JavaScript for LoginModal -->
     <script src="scripts/loginModal.js"></script>
+
+    <!-- Include account.js file -->
+    <script src="scripts/account.js"></script>
 
     <!-- JavaScript for Bootstrap5 -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>

@@ -3,6 +3,7 @@ session_start();
 
 
 // Include Models
+include ("./models/gameStatistics.php");
 include("./models/gameResult.php");
 include("./models/vocabPair.php");
 include("./models/spanish.php");
@@ -94,12 +95,13 @@ class DataHandler
         $insertResultsStatement = "INSERT INTO gameresults (fk_user_id, punkte) VALUES ($id, $points)";
         $sqlQuery = $dbConnection->query($insertResultsStatement);
         
-        $getLevelAndPoints = "SELECT level, punkte FROM user WHERE id = $id";
+        $getLevelAndPoints = "SELECT level, punkte, timestamp FROM user WHERE id = $id";
         $sqlQuery = $dbConnection->query($getLevelAndPoints);
         $result = $sqlQuery->fetch_assoc();
 
         $oldLvl = $result["level"];
         $oldPoints = $result["punkte"];
+        $timestamp = $result["timestamp"];
 
 
         $newPoints = $oldPoints + $points;
@@ -113,9 +115,36 @@ class DataHandler
         $updatePoints = "UPDATE user SET punkte = $pointsRemaining WHERE id = $id";
         $sqlQuery = $dbConnection->query($updatePoints);
 
-        return new GameResult($username, $pointsRemaining, $newLvl);
+        return new GameResult($username, $pointsRemaining, $newLvl, $timestamp);
     }
 
+    public function queryGameStatisticsByUser() {
+        $result0 = array();
+        array_push($result0, new GameStatistics("A", "A", "A", "A", "A"));
+        return $result0;
+
+        $dbConnection = $this->openUserConnection();
+
+        if(!$dbConnection) { // if connection failed return null
+            return "ERROR NO DB CONNECTION";
+        }
+
+        if (!isset($_SESSION["benutzer"])) {
+            return "NO USER LOGGED IN";
+        }
+
+        $username = $_SESSION["benutzer"]["username"];
+
+        $result = array();
+
+        $sqlStatement = "SELECT punkte, timestamp FROM gameresults INNER JOIN user ON id = fk_user_id WHERE username = $username";
+        $sqlQuery = $dbConnection->query($sqlStatement);
+        while ($row = $sqlQuery->fetch_array()) {
+            array_push($result, $this->convertToGameStatisticsObject($row));
+        }
+
+        return $result;
+    }
 
     // #### Private Methods ####
     private function openVocabConnection() { // returns false if connection failed, else returns mysqli-object
@@ -157,6 +186,13 @@ class DataHandler
                 break;
         }
         return new VocabPair($id, $german, $other);
+    }
+
+    private function convertToGameStatisticsObject($assoc) {
+        $pointsGainedFromGame = $assoc["punkte"];
+        $timestamp = $assoc["timestamp"];
+
+        return new GameStatistics($pointsGainedFromGame, $timestamp);
     }
 
     private static function getDemoData() {
