@@ -95,13 +95,12 @@ class DataHandler
         $insertResultsStatement = "INSERT INTO gameresults (fk_user_id, punkte) VALUES ($id, $points)";
         $sqlQuery = $dbConnection->query($insertResultsStatement);
         
-        $getLevelAndPoints = "SELECT level, punkte, timestamp FROM user WHERE id = $id";
+        $getLevelAndPoints = "SELECT level, punkte FROM user WHERE id = $id";
         $sqlQuery = $dbConnection->query($getLevelAndPoints);
         $result = $sqlQuery->fetch_assoc();
 
         $oldLvl = $result["level"];
         $oldPoints = $result["punkte"];
-        $timestamp = $result["timestamp"];
 
 
         $newPoints = $oldPoints + $points;
@@ -115,31 +114,31 @@ class DataHandler
         $updatePoints = "UPDATE user SET punkte = $pointsRemaining WHERE id = $id";
         $sqlQuery = $dbConnection->query($updatePoints);
 
-        return new GameResult($username, $pointsRemaining, $newLvl, $timestamp);
+        return new GameResult($username, $pointsRemaining, $newLvl);
     }
 
     public function queryGameStatisticsByUser() {
-        $result0 = array();
-        array_push($result0, new GameStatistics("A", "A", "A", "A", "A"));
-        return $result0;
+        // $result0 = array();
+        // array_push($result0, new GameStatistics("A", "A", "A", "A", "A"));
+        // return $result0;
 
         $dbConnection = $this->openUserConnection();
 
         if(!$dbConnection) { // if connection failed return null
-            return "ERROR NO DB CONNECTION";
+            return null;
         }
 
         if (!isset($_SESSION["benutzer"])) {
-            return "NO USER LOGGED IN";
+            return null;
         }
 
-        $username = $_SESSION["benutzer"]["username"];
+        $id = $_SESSION["benutzer"]["id"];
 
         $result = array();
 
-        $sqlStatement = "SELECT punkte, timestamp FROM gameresults INNER JOIN user ON id = fk_user_id WHERE username = $username";
+        $sqlStatement = "SELECT punkte, timestamp FROM gameresults WHERE fk_user_id = $id";
         $sqlQuery = $dbConnection->query($sqlStatement);
-        while ($row = $sqlQuery->fetch_array()) {
+        while ($row = $sqlQuery->fetch_assoc()) {
             array_push($result, $this->convertToGameStatisticsObject($row));
         }
 
@@ -189,10 +188,10 @@ class DataHandler
     }
 
     private function convertToGameStatisticsObject($assoc) {
-        $pointsGainedFromGame = $assoc["punkte"];
+        $pointsGained = $assoc["punkte"];
         $timestamp = $assoc["timestamp"];
 
-        return new GameStatistics($pointsGainedFromGame, $timestamp);
+        return new GameStatistics($pointsGained, $timestamp);
     }
 
     private static function getDemoData() {

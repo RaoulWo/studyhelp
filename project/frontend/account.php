@@ -64,9 +64,22 @@
                 <h1 class="text-sm-start text-center"><span class="badge bg-dark text-light"><i
                             class="fa-solid fa-list"></i></span> Spiel-Resultate</h1>
                 <hr>
+                <div class="p-2 text-sm-start text-center">
+                <div class="btn-group" role="group">
+                    <button id="pointsDesc" type="button" class="btn btn-primary"><i class="fa-solid fa-arrow-down"></i> Punkte</button>
+                    <button id="pointsAsc" type="button" class="btn btn-primary"><i class="fa-solid fa-arrow-up"></i>  Punkte</button>
+                </div>
+
+                <div class="btn-group ms-sm-2 mt-sm-0 mt-2" role="group">
+                    <button id="datesDesc" type="button" class="btn btn-warning"><i class="fa-solid fa-arrow-down"></i> Datum</button>
+                    <button id="datesAsc" type="button" class="btn btn-warning"><i class="fa-solid fa-arrow-up"></i>  Datum</button>
+                </div>
+                </div>
+                
+
             </div>
             <!-- Here the GameResults are created -->
-            <div id="gameResults">
+            <div id="gamestats">
 
             </div>
         </div>
