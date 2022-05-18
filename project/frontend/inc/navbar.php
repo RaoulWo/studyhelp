@@ -7,18 +7,17 @@ $name6 = "Sprache";
 $name7 = "Deutsch";
 $name8 = "Englisch";
 $name9 = "link9";
-$name10 = "link10";
-$name11 = "link11";
+$name10 = "Userverwaltung";
 $name12 = "Profil";
 $name13 = "logout";
-$link2 = "account.php";
+$link2 = "../frontend/account.php";
 $link3 = $link4 = $link5 = "#";
 // Initialize variables with website names
 $name0 = "STUDYHELP";
 $name1 = "Game";
 // Initialize variables with website links
-$link0 = "index.php";
-$link1 = "game.php";
+$link0 = "../frontend/index.php";
+$link1 = "../frontend/game.php";
 ?>
 
 
@@ -57,8 +56,9 @@ $link1 = "game.php";
             <li><a class="dropdown-item" href="indexcadeenglish.html"><?php echo $name8; ?></a></li>
           </ul>
         </li>
-        <li class="nav-item"><a class="nav-link" href="Link"><?php echo $name10; ?></a></li>
-        <li class="nav-item"><a class="nav-link" href="Link"><?php echo $name11; ?></a></li>
+        <?php if (isset($_SESSION['benutzer']['benutzer_typ']) && $_SESSION['benutzer']['benutzer_typ'] == 'admin') : ?>
+        <li class="nav-item"><a class="nav-link" href="../backend/userverwaltung.php"><?php echo $name10; ?></a></li>
+        <?php endif ?>
       </ul>
     </div>
     <form class="d-flex">
@@ -69,7 +69,7 @@ $link1 = "game.php";
         </button>
       <?php else: ?>
         <span class="navbar-text">
-            <span>Sie sind jetzt als <a href="account.php"><?php echo $_SESSION['benutzer']['username']; ?></a> eingelogged.
+            <span>Sie sind jetzt als <a href="../frontend/account.php"><?php echo $_SESSION['benutzer']['username']; ?></a> eingelogged.
               Nicht <?php echo $_SESSION['benutzer']['username']; ?>?
               <a href="index.php?logout=true" name="logout">Ausloggen</a></span>
         </span>

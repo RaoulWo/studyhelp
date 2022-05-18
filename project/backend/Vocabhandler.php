@@ -1,5 +1,10 @@
 <?php
 
+if (!(isset($_SESSION['benutzer']['benutzer_typ'])) || $_SESSION['benutzer']['benutzer_typ'] != 'Admin') {
+    $_SESSION['Fehler'] = 'Sie haben hier nichts verloren!';
+    header("location: Fehler.php");
+  }
+
 
 echo "<a href='Vocabhandler.html'>Return to Vocab Handler</a>  <br><br> <h1>Log: </h1>";
 
