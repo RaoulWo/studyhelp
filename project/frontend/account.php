@@ -48,8 +48,20 @@
         </div>
     </section>
 
-    
+    <!-- Container for GameResults -->
+    <section class="p-4 bg-light">
+        <div class="container">
+            <div class="mb-4">
+                <h1 class="text-sm-start text-center"><span class="badge bg-dark text-light"><i
+                            class="fa-solid fa-list"></i></span> Spiel-Resultate</h1>
+                <hr>
+            </div>
+            <!-- Here the GameResults are created -->
+            <div id="gameResults">
 
+            </div>
+        </div>
+    </section>
    
     <!-- Include loginModal -->
     <?php include_once("inc/loginModal.php"); ?>
