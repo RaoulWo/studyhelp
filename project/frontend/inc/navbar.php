@@ -34,6 +34,8 @@ $link1 = "game.php";
         <li class="nav-item">
           <a class="nav-link" href="Link"><?php echo $name9; ?></a>
         </li>
+
+
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"><?php echo $name1; ?></a>
           <ul class="dropdown-menu">
@@ -42,14 +44,20 @@ $link1 = "game.php";
             <li><a class="dropdown-item" href="Link"><?php echo $name1; ?>3</a></li>
           </ul>
         </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"><?php echo $name2; ?></a>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="<?php echo $link2; ?>"><?php echo $name2, $name3; ?></a></li>
-            <li><a class="dropdown-item" href="link"><?php echo $name4; ?></a></li>
-            <li><a class="dropdown-item" href="Link"><?php echo $name2, $name5; ?></a></li>
-          </ul>
-        </li>
+
+
+        <?php if(isset($_SESSION['benutzer'])) : ?>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"><?php echo $name2; ?></a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="<?php echo $link2; ?>"><?php echo $name2, $name3; ?></a></li>
+                <li><a class="dropdown-item" href="link"><?php echo $name4; ?></a></li>
+                <li><a class="dropdown-item" href="Link"><?php echo $name2, $name5; ?></a></li>
+             </ul>
+          </li>
+        <?php endif ?>
+
+
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"><?php echo $name6; ?></a>
           <ul class="dropdown-menu">
@@ -61,6 +69,8 @@ $link1 = "game.php";
         <li class="nav-item"><a class="nav-link" href="Link"><?php echo $name11; ?></a></li>
       </ul>
     </div>
+
+    
     <form class="d-flex">
       <!-- Button trigger modal -->
       <?php if (!(isset($_SESSION["benutzer"]))) : ?>

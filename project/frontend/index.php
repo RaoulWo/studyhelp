@@ -40,19 +40,21 @@
     </section>
 
     <!--Anmeldung-->
-    <section class="bg-primary text-light p-5">
-        <div class="container">
-            <div class="d-md-flex justify-content-between align-items-center">
-                <h3 class="mb-3 mb-md-0">Hier kann man sich einloggen oder sich einen Account erstellen</h3>
+    <?php if(!isset($_SESSION['benutzer'])) : ?>
+        <section class="bg-primary text-light p-5">
+            <div class="container">
+                <div class="d-md-flex justify-content-between align-items-center">
+                    <h3 class="mb-3 mb-md-0">Hier kann man sich einloggen oder sich einen Account erstellen</h3>
                 
-                <div class="input-group news-input">
-                <button type="button" class="btn btn-dark btn-lg" data-bs-toggle="modal" data-bs-target="#loginModal">
-                Login
-              </button>
-                  </div>
+                    <div class="input-group news-input">
+                    <button type="button" class="btn btn-dark btn-lg" data-bs-toggle="modal" data-bs-target="#loginModal">
+                    Login
+                    </button>
+                    </div>
+                </div>
             </div>
-        </div>
-    </section>
+        </section>
+    <?php endif ?>
 
     <!--Boxen-->
     <section class="p-5">
