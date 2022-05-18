@@ -1,6 +1,6 @@
 <?php
 $name2 = "Account";
-$name3 = "Sehe ";
+$name3 = " Daten";
 $name4 = "Freunde";
 $name5 = " Einstellungen";
 $name6 = "Sprache";
@@ -11,7 +11,8 @@ $name10 = "link10";
 $name11 = "link11";
 $name12 = "Profil";
 $name13 = "logout";
-$link2 = $link3 = $link4 = $link5 = "#";
+$link2 = "account.php";
+$link3 = $link4 = $link5 = "#";
 // Initialize variables with website names
 $name0 = "STUDYHELP";
 $name1 = "Game";
@@ -44,7 +45,7 @@ $link1 = "game.php";
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"><?php echo $name2; ?></a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="link"><?php echo $name3, $name2; ?></a></li>
+            <li><a class="dropdown-item" href="<?php echo $link2; ?>"><?php echo $name2, $name3; ?></a></li>
             <li><a class="dropdown-item" href="link"><?php echo $name4; ?></a></li>
             <li><a class="dropdown-item" href="Link"><?php echo $name2, $name5; ?></a></li>
           </ul>

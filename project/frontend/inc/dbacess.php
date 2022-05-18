@@ -42,6 +42,7 @@ if (isset($_POST['reg_user'])) {
 
   // Falls es keine Fehler in der Registrierung gibt wird der Account erstellt
   if (count($errors) == 0) {
+    $_SESSION['mail'] = $email;
     $password = md5($password_1);
     //Passwort wird vor der Anlegung in Datenbank verschlüsselt
     //Wenn der User von einem Admin erstellt wird und usertyp ausgewählt wurde wird der Benutzer mit diesem Typen erstellt
@@ -92,6 +93,9 @@ if (isset($_POST['login_user'])) {
         $benutzer = mysqli_fetch_assoc($results);
         $_SESSION['benutzer'] = $benutzer;
         $_SESSION['success'] = "Sie sind jetzt eingelogged!";
+        $query2 = "SELECT email FROM user WHERE username='$username'";
+        $umail = mysqli_fetch_assoc(mysqli_query($db, $query2));
+        $_SESSION['mail'] = $umail['email'];
       }
       else {
           array_push($errors, "Falscher Username oder falsches Passwort oder Account deaktiviert. Bitte versuchen Sie es erneut!");
