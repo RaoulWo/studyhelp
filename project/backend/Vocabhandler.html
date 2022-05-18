@@ -15,22 +15,24 @@
 
     <form action="Vocabhandler.php" method="post" enctype="multipart/form-data">
         Select CSV file with vocabulary to upload:  
-        <input type="file" name="fileToUpload" id="fileToUpload">
+        <input type="file" name="fileToUpload" id="fileToUpload" required>
         <br><br>
         <label for="lang1">Language 1: (This feature will be added at a later stage)</label>
-        <select class="form-select" aria-label="lang3" id="lang1" name="lang1" disabled>
+        <select class="form-select" aria-label="lang1" id="lang1" name="lang1" disabled>
             <option selected>Deutsch</option>
-            <option value="1">Englisch</option>
-            <option value="2">Spanisch</option>
-            <option value="3">Französisch</option>
+            <option value="Englisch">Englisch</option>
+            <option value="Spanisch">Spanisch</option>
+            <option value="Französisch">Französisch</option>
+            <option value="Russisch">Russisch</option>
         </select>
 
         <label for="lang2">Language 2: </label>
         <select class="form-select" aria-label="lang2" id="lang2" name="lang2">
-            <option selected>Englisch</option>
-            <option value="1">Deutsch</option>
-            <option value="2">Spanisch</option>
-            <option value="3">Französisch</option>
+            <option selected value="Englisch">Englisch</option>
+            <option value="Spanisch">Spanisch</option>
+            <option value="Französisch">Französisch</option>
+            <option value="Russisch">Russisch</option>
+            <option value="Deutsch">Deutsch</option>
         </select>
         <br><br>
         <input class="btn btn-primary" type="submit" value="Upload Vocab List" name="submit">

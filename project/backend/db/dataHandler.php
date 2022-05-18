@@ -6,7 +6,6 @@ session_start();
 include ("./models/gameStatistics.php");
 include("./models/gameResult.php");
 include("./models/vocabPair.php");
-include("./models/spanish.php");
 
 // Definition of DataHandler-Class
 class DataHandler

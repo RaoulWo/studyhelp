@@ -48,8 +48,8 @@ if (isset($_POST['reg_user'])) {
     //Wenn der User von einem Admin erstellt wird und usertyp ausgewählt wurde wird der Benutzer mit diesem Typen erstellt
     if (isset($_POST['usertype'])){
       $benutzertyp = mysqli_real_escape_string($db, $_POST['usertype']);
-      $query = "INSERT INTO user (username, email, password, benutzer_type) 
-            VALUES('$username', '$email', '$password', '$benutzertype')";
+      $query = "INSERT INTO user (username, email, password, benutzer_typ) 
+            VALUES('$username', '$email', '$password', '$benutzertyp')";
       mysqli_query($db, $query);
 
       $_SESSION['sucess'] = "Neuer Benutzer wurde angelegt";
@@ -107,21 +107,21 @@ if (isset($_POST['login_user'])) {
 if (isset($_POST['moduser'])) {
 
       //Benutzerdaten die für normale Benutzer veränderbar sind
-      $profil_aendern = "UPDATE benutzer SET username = '$username', email = '$email',
+      $profil_aendern = "UPDATE user SET username = '$username', email = '$email'
       WHERE id =" .  $_SESSION['ID'];
       mysqli_query($db, $profil_aendern);
 
       //Passwort änderung
-      if (isset($_POST['passwort'])){
+      if (isset($_POST['password'])){
         $passwort = md5(mysqli_real_escape_string($db, $_POST['passwort']));
-        $passwort_aendern = "UPDATE benutzer SET passwort = '$passwort' WHERE id=" . $_SESSION['ID'];
+        $passwort_aendern = "UPDATE user SET password = '$password' WHERE id=" . $_SESSION['ID'];
         mysqli_query($db,$passwort_aendern);
       }
       //Benutzertyp änderung
-      if (isset($_POST['usertyp'])){
-        $benutzertyp = mysqli_real_escape_string($db, $_POST['usertyp']);
-        $chusertyp = "UPDATE benutzer SET passwort = '$passwort', benutzer_typ = '$benutzertyp' WHERE id=" . $_SESSION['ID'];
-        mysqli_query($db, $chusertyp);
+      if (isset($_POST['usertype'])){
+        $benutzertyp = mysqli_real_escape_string($db, $_POST['usertype']);
+        $chusertype = "UPDATE user SET password = '$password', benutzer_typ = '$benutzertyp' WHERE id=" . $_SESSION['ID'];
+        mysqli_query($db, $chusertype);
       }
 
       $_SESSION['success'] = "Profildaten wurden erfolgreich geändert";
@@ -129,7 +129,7 @@ if (isset($_POST['moduser'])) {
         header('location: userverwaltung.php');
       }
       else {
-        header('location: profil.php');
+        header('location: index.php');
       }
 
 }

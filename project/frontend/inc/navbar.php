@@ -69,7 +69,7 @@ $link1 = "game.php";
         </button>
       <?php else: ?>
         <span class="navbar-text">
-            <span>Sie sind jetzt als <a href="profil.php"><?php echo $_SESSION['benutzer']['username']; ?></a> eingelogged.
+            <span>Sie sind jetzt als <a href="account.php"><?php echo $_SESSION['benutzer']['username']; ?></a> eingelogged.
               Nicht <?php echo $_SESSION['benutzer']['username']; ?>?
               <a href="index.php?logout=true" name="logout">Ausloggen</a></span>
         </span>

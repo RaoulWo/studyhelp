@@ -1,14 +1,6 @@
 <?php
     include_once('inc/dbacess.php');
     include_once('inc/errors.php');
-    print_r($_SESSION);
-    if (isset($_GET['logout'])) {
-        session_destroy();
-        unset($_SESSION['benutzer']);
-    }
-    if (!isset($_SESSION['benutzer'])){
-        header('location: index.php');
-    }
 ?>
 
 
@@ -41,8 +33,9 @@
                     </div>
                     <div class="col-lg">
                         <?php echo $_SESSION['benutzer']['username'];?><br><br>
-                        <?php echo $_SESSION['mail'];?>
+                        <?php echo $_SESSION['mail'];?><br><br>
                     </div>
+                    <a href="profil_aendern.php?user=<?php echo $_SESSION['benutzer']['id']; ?>">Profil bearbeiten</a>
                 </div>
             </div>
         </div>
