@@ -134,6 +134,22 @@ function CreateFriendRequestContent(id, sender, ts) {
     date.innerHTML = '<i class="fa-solid fa-calendar"></i> Gesendet am: ' + str;
     con.append(date);
     $(requestId).append(con);
+    $(requestId).append(document.createElement("hr"));
+    const con2 = document.createElement("div");
+    con2.className = "text-sm-start text-center";
+    const btnAccept = document.createElement("button");
+    btnAccept.setAttribute("type", "button");
+    btnAccept.id = id + "_Accept";
+    btnAccept.className = "btn btn-success me-2";
+    btnAccept.innerHTML = '<i class="fa-solid fa-check"></i> Annehmen';
+    const btnDeny = document.createElement("button");
+    btnDeny.setAttribute("type", "button");
+    btnDeny.id = id + "_Deny";
+    btnDeny.className = "btn btn-danger";
+    btnDeny.innerHTML = '<i class="fa-solid fa-xmark"></i> Ablehnen';
+    con2.append(btnAccept);
+    con2.append(btnDeny);
+    $(requestId).append(con2);
 }
 function convertToWeekday(day) {
     switch (day) {

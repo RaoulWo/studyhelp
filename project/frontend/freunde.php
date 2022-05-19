@@ -13,6 +13,7 @@ session_start();
     <!-- Include Navbar -->
     <?php include_once("inc/navbar.php"); ?>    
 
+
     <form method="post" id="addFriend" name="addFriend" action="../backend/friendhandler.php">
         <div class="p-4">
             <div class="container">
@@ -22,17 +23,26 @@ session_start();
             </div>
         </div>
     </form>
+
+
     <hr>
 
     <div class="p-4">
         <div class="container">
         <h1 class="text-sm-start text-center mb-3">Deine Freundschaftsanfragen</h1>
+        <div class=" text-sm-start text-center">
         <div class="btn-group ms-sm-2 mt-sm-0 mt-2" role="group">
             <button id="datesDesc" type="button" class="btn btn-warning"><i class="fa-solid fa-arrow-down"></i> Datum</button>
             <button id="datesAsc" type="button" class="btn btn-warning"><i class="fa-solid fa-arrow-up"></i>  Datum</button>
         </div>
-        <div id="friendRequests" class="mt-4"></div>
-    </div>    
+        </div>
+        
+        <div id="friendRequests" class="mt-4">
+        </div>
+    </div>
+
+
+    
 
 
 
