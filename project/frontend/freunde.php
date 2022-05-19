@@ -13,13 +13,15 @@ session_start();
     <!-- Include Navbar -->
     <?php include_once("inc/navbar.php"); ?>    
 
-    <div class="p-4">
-        <div class="container">
-            <h1 class="mb-3">Freunde hinzufügen</h1>
-            <input type="text" class="form-control" id="friendSearch" placeholder="Username hier eingeben">
-            <button class="btn btn-outline-success mt-2">Suche starten</button>
+    <form method="post" id="addFriend" name="addFriend" action="../backend/friendhandler.php">
+        <div class="p-4">
+            <div class="container">
+                <h1 class="mb-3">Freunde hinzufügen</h1>
+                <input type="text" class="form-control" id="friend" placeholder="Username hier eingeben" name="friend">
+                <button type="submit" class="btn btn-outline-success mt-2" name="addFriend">Freundschaftanfrage schicken</button>
+            </div>
         </div>
-    </div>
+    </form>
     
 
 
