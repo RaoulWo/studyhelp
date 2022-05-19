@@ -65,7 +65,10 @@ CREATE TABLE `freunde` (
   `user_id_1` int(11) NOT NULL,
   `user_id_2` int(11) NOT NULL,
   `friends_since` timestamp NOT NULL DEFAULT current_timestamp(),
-  PRIMARY KEY (`user_id_1`,`user_id_2`)
+  PRIMARY KEY (`user_id_1`,`user_id_2`),
+  KEY `user_id_2` (`user_id_2`),
+  CONSTRAINT `freunde_ibfk_1` FOREIGN KEY (`user_id_1`) REFERENCES `user` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `freunde_ibfk_2` FOREIGN KEY (`user_id_2`) REFERENCES `user` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_german2_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -109,3 +112,41 @@ UNLOCK TABLES;
 --
 -- Table structure for table `user`
 --
+<<<<<<< HEAD
+=======
+
+DROP TABLE IF EXISTS `user`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `user` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `username` varchar(100) COLLATE utf8_german2_ci NOT NULL,
+  `email` varchar(100) COLLATE utf8_german2_ci NOT NULL,
+  `password` varchar(100) COLLATE utf8_german2_ci NOT NULL,
+  `level` int(11) NOT NULL DEFAULT 0,
+  `punkte` int(11) NOT NULL DEFAULT 0,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_german2_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `user`
+--
+
+LOCK TABLES `user` WRITE;
+/*!40000 ALTER TABLE `user` DISABLE KEYS */;
+INSERT INTO `user` VALUES (1,'Raoul','Raoul.Wograndl@email.at','81dc9bdb52d04dc20036dbd8313ed055 ',0,350),(2,'Paul','Paul.Paul@Paul','81dc9bdb52d04dc20036dbd8313ed055',3,850),(3,'test','test@test','098f6bcd4621d373cade4e832627b4f6',0,0);
+/*!40000 ALTER TABLE `user` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2022-05-19 10:46:55
+>>>>>>> 08a6b60b6ac62fb43388626d6216af79a7db31e3
