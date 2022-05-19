@@ -24,6 +24,9 @@ class Logic
             case "queryGameStatisticsByUser":
                 $res = $this->dh->queryGameStatisticsByUser();
                 break;
+            case "queryFriendRequests":
+                $res = $this->dh->queryFriendRequests();
+                break;
             default:
                 $res = null;
                 break;

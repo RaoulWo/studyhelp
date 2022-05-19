@@ -3,6 +3,7 @@ session_start();
 
 
 // Include Models
+include("./models/friendRequest.php");
 include ("./models/gameStatistics.php");
 include("./models/gameResult.php");
 include("./models/vocabPair.php");
@@ -119,6 +120,30 @@ class DataHandler
         return $result;
     }
 
+    public function queryFriendRequests() {
+        $dbConnection = $this->openUserConnection();
+        if(!$dbConnection) { // if connection failed return null
+            return "ERROR NO DB CONNECTION";
+        }
+
+        if (!isset($_SESSION["benutzer"])) {
+            return "NO USER LOGGED IN";
+        }
+        
+        $receiverId = $_SESSION["benutzer"]["id"];
+
+        $result = array();
+
+        $sqlStatement = "SELECT username, friends_since FROM user INNER JOIN freunde ON id = user_id_1 WHERE
+        user_id_2 = $receiverId AND status = 'ausstehend'";
+        $sqlQuery = $dbConnection->query($sqlStatement);
+        while ($row = $sqlQuery->fetch_assoc()) {
+            array_push($result, $this->convertToFriendRequestObject($row));
+        }
+        return $result;
+    }
+
+
     // #### Private Methods ####
     private function openVocabConnection() { // returns false if connection failed, else returns mysqli-object
         require_once("db/config/dbaccess.php");
@@ -166,6 +191,13 @@ class DataHandler
         $timestamp = $assoc["timestamp"];
 
         return new GameStatistics($pointsGained, $timestamp);
+    }
+
+    private function convertToFriendRequestObject($assoc) {
+        $sender = $assoc["username"];
+        $timestamp = $assoc["friends_since"];
+
+        return new FriendRequest($sender, $timestamp);
     }
 }
 
