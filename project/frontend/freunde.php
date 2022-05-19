@@ -15,9 +15,9 @@ session_start();
 
     <div class="p-4">
         <div class="container">
-            <h1>Freunde hinzufügen</h1>
-            label
-            <button class="btn btn-outline-success mt-2">Freunde suchen</button>
+            <h1 class="mb-3">Freunde hinzufügen</h1>
+            <input type="text" class="form-control" id="friendSearch" placeholder="Username hier eingeben">
+            <button class="btn btn-outline-success mt-2">Suche starten</button>
         </div>
     </div>
     
