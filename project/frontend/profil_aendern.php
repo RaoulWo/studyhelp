@@ -1,6 +1,6 @@
 <?php
     //Überprüfung ob User ein Admin ist
-    include_once("inc/dbacess.php");
+    include_once("inc/usersystem.php");
     if (!(isset($_SESSION['benutzer']['benutzer_typ'])) && $_SESSION['benutzer']['benutzer_typ'] != 'Admin' && 
         $_SESSION['benutzer']['id'] != $_GET['user']){
             $_SESSION['Fehler'] = 'Sie können dieses Benutzerprofil nicht verändern!';

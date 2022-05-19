@@ -18,15 +18,6 @@ class Logic
             case "queryRandomVocabByLanguage":
                 $res = $this->dh->queryRandomVocabByLanguage($param);
                 break;
-            case "queryVocabList":
-                $res = $this->dh->queryVocabList();
-                break;
-            case "queryVocabById":
-                $res = $this->dh->queryVocabById($param);
-                break;
-            case "queryVocabByWord":
-                $res = $this->dh->queryVocabByWord($param);
-                break;
             case "insertGameResultsIntoDatabase":
                 $res = $this->dh->insertGameResultsIntoDatabase($param);
                 break;
