@@ -1,8 +1,8 @@
--- MariaDB dump 10.19  Distrib 10.4.22-MariaDB, for Win64 (AMD64)
+-- MariaDB dump 10.19  Distrib 10.4.24-MariaDB, for Win64 (AMD64)
 --
 -- Host: localhost    Database: user
 -- ------------------------------------------------------
--- Server version	10.4.22-MariaDB
+-- Server version	10.4.24-MariaDB
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -14,6 +14,30 @@
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `freunde`
+--
+
+DROP TABLE IF EXISTS `freunde`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `freunde` (
+  `user_id_1` int(11) NOT NULL,
+  `user_id_2` int(11) NOT NULL,
+  `friends_since` timestamp NOT NULL DEFAULT current_timestamp(),
+  PRIMARY KEY (`user_id_1`,`user_id_2`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_german2_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `freunde`
+--
+
+LOCK TABLES `freunde` WRITE;
+/*!40000 ALTER TABLE `freunde` DISABLE KEYS */;
+/*!40000 ALTER TABLE `freunde` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `gameresults`
@@ -30,7 +54,7 @@ CREATE TABLE `gameresults` (
   PRIMARY KEY (`game_id`),
   KEY `fk_user_id` (`fk_user_id`),
   CONSTRAINT `gameresults_ibfk_1` FOREIGN KEY (`fk_user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -39,7 +63,7 @@ CREATE TABLE `gameresults` (
 
 LOCK TABLES `gameresults` WRITE;
 /*!40000 ALTER TABLE `gameresults` DISABLE KEYS */;
-INSERT INTO `gameresults` VALUES (16,1,200,'2022-05-17 08:06:04'),(17,1,200,'2022-05-17 08:09:43'),(18,1,150,'2022-05-17 08:10:29'),(19,1,300,'2022-05-17 08:11:56'),(20,1,300,'2022-05-17 08:14:07'),(21,1,0,'2022-05-17 08:15:53'),(22,1,50,'2022-05-17 08:16:25'),(23,1,300,'2022-05-17 08:16:51'),(24,1,250,'2022-05-17 08:17:56'),(25,1,50,'2022-05-17 08:21:55'),(26,1,50,'2022-05-17 08:22:46'),(27,1,300,'2022-05-17 08:24:02'),(28,1,300,'2022-05-17 08:26:06'),(29,1,100,'2022-05-17 08:26:48'),(30,1,300,'2022-05-17 08:28:17'),(31,1,100,'2022-05-17 08:28:48'),(32,1,300,'2022-05-17 08:30:56'),(33,1,300,'2022-05-17 08:32:04'),(34,1,200,'2022-05-17 08:34:02'),(35,1,50,'2022-05-17 08:36:15'),(36,1,0,'2022-05-17 08:36:38'),(37,1,200,'2022-05-17 08:38:25'),(38,1,300,'2022-05-17 08:38:37'),(39,1,200,'2022-05-17 08:40:32'),(40,1,100,'2022-05-17 08:45:49'),(41,1,200,'2022-05-17 08:46:45'),(42,1,200,'2022-05-17 08:47:15'),(43,1,200,'2022-05-17 08:48:28'),(44,1,300,'2022-05-17 08:49:13');
+INSERT INTO `gameresults` VALUES (7,2,1300,'2022-05-18 19:39:17'),(8,2,200,'2022-05-18 19:39:17'),(9,2,300,'2022-05-18 19:39:17'),(10,2,200,'2022-05-18 19:39:17'),(11,2,100,'2022-05-18 19:39:17'),(12,2,200,'2022-05-18 19:39:17'),(13,2,300,'2022-05-18 19:39:17'),(14,2,200,'2022-05-18 19:39:17'),(15,2,100,'2022-05-18 19:39:17');
 /*!40000 ALTER TABLE `gameresults` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -57,8 +81,10 @@ CREATE TABLE `user` (
   `password` varchar(100) COLLATE utf8_german2_ci NOT NULL,
   `level` int(11) NOT NULL DEFAULT 0,
   `punkte` int(11) NOT NULL DEFAULT 0,
+  `benutzer_typ` varchar(11) COLLATE utf8_german2_ci DEFAULT NULL,
+  `status` int(1) NOT NULL DEFAULT 1,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_german2_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_german2_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -67,7 +93,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'Raoul','Raoul.Wograndl@email.at','81dc9bdb52d04dc20036dbd8313ed055 ',5,500),(2,'Paul','Paul.Paul@Paul','81dc9bdb52d04dc20036dbd8313ed055',3,850);
+INSERT INTO `user` VALUES (2,'Laurenz','lonzo69420@studzhelp.at','',3,850,NULL,1),(5,'gast','gast@studyhelp.at','d4061b1486fe2da19dd578e8d970f7eb',0,0,NULL,1),(6,'admin','admin@studyhelp.at','21232f297a57a5a743894a0e4a801fc3',0,0,'admin',1);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -80,4 +106,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-05-18 21:41:34
+-- Dump completed on 2022-05-19 10:06:55
