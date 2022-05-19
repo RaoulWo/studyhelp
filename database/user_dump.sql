@@ -112,8 +112,7 @@ UNLOCK TABLES;
 --
 -- Table structure for table `user`
 --
-<<<<<<< HEAD
-=======
+
 
 DROP TABLE IF EXISTS `user`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -149,4 +148,3 @@ UNLOCK TABLES;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 -- Dump completed on 2022-05-19 10:46:55
->>>>>>> 08a6b60b6ac62fb43388626d6216af79a7db31e3

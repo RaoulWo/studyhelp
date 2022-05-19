@@ -16,7 +16,7 @@
     <?php include_once("inc/metaData.php"); ?>
     <title>Studyhelp</title>
 </head>
-<body class="bg-info">
+<body class="bg">
     <!-- Include Navbar -->
     <?php include_once("inc/navbar.php"); ?>    
 
@@ -27,8 +27,8 @@
     <section class="p-5">
         <div class="container">
             <div class="row text-center">
-                <H1 class="text-danger">Account Daten:</H1>
-                <div class="row col-12 h4 border border-3 border-secondary rounded bg-secondary mt-5 text-info">
+                <H1>Account Daten:</H1>
+                <div class="row col-12 h4 border border-3 border-secondary rounded  mt-5">
                     <div class="col-lg">
                         <span>Username:<br><br>
                         Email:<br><br>
