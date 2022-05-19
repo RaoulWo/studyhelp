@@ -6,7 +6,6 @@ $name5 = " Einstellungen";
 $name6 = "Sprache";
 $name7 = "Deutsch";
 $name8 = "Englisch";
-$name9 = "link9";
 $name10 = "Userverwaltung";
 $name12 = "Profil";
 $name13 = "logout";
@@ -18,6 +17,7 @@ $name1 = "Game";
 // Initialize variables with website links
 $link0 = "../frontend/index.php";
 $link1 = "../frontend/game.php";
+$link4 = "../frontend/freunde.php";
 ?>
 
 
@@ -30,9 +30,9 @@ $link1 = "../frontend/game.php";
     </button>
     <div class="collapse navbar-collapse" id="collapsibleNavbar">
       <ul class="navbar-nav">
-        <li class="nav-item">
+        <!-- <li class="nav-item">
           <a class="nav-link" href="Link"><?php echo $name9; ?></a>
-        </li>
+        </li> -->
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"><?php echo $name1; ?></a>
           <ul class="dropdown-menu">
@@ -41,21 +41,23 @@ $link1 = "../frontend/game.php";
             <li><a class="dropdown-item" href="Link"><?php echo $name1; ?>3</a></li>
           </ul>
         </li>
+        <?php if ((isset($_SESSION["benutzer"]))) : ?>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"><?php echo $name2; ?></a>
           <ul class="dropdown-menu">
             <li><a class="dropdown-item" href="<?php echo $link2; ?>"><?php echo $name2, $name3; ?></a></li>
-            <li><a class="dropdown-item" href="link"><?php echo $name4; ?></a></li>
+            <li><a class="dropdown-item" href="<?php echo $link4; ?>"><?php echo $name4; ?></a></li>
             <li><a class="dropdown-item" href="Link"><?php echo $name2, $name5; ?></a></li>
           </ul>
         </li>
-        <li class="nav-item dropdown">
+        <?php endif ?>
+        <!-- <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"><?php echo $name6; ?></a>
           <ul class="dropdown-menu">
             <li><a class="dropdown-item" href="indexcadedeutsch.html"><?php echo $name7; ?></a></li>
             <li><a class="dropdown-item" href="indexcadeenglish.html"><?php echo $name8; ?></a></li>
           </ul>
-        </li>
+        </li> -->
         <?php if (isset($_SESSION['benutzer']['benutzer_typ']) && $_SESSION['benutzer']['benutzer_typ'] == 'admin') : ?>
         <li class="nav-item"><a class="nav-link" href="../backend/userverwaltung.php"><?php echo $name10; ?></a></li>
         <?php endif ?>
