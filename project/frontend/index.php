@@ -6,6 +6,7 @@
         unset($_SESSION['benutzer']);
         header("location: index.php");
     }
+    
 ?>
 
 <!DOCTYPE html>
