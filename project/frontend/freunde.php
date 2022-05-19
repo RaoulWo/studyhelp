@@ -20,6 +20,12 @@ session_start();
             <button class="btn btn-outline-success mt-2">Suche starten</button>
         </div>
     </div>
+
+    <hr>
+
+    <div class="p-4">
+        <div class="container"></div>
+    </div>
     
 
 

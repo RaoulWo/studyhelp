@@ -26,7 +26,10 @@ CREATE TABLE `freunde` (
   `user_id_1` int(11) NOT NULL,
   `user_id_2` int(11) NOT NULL,
   `friends_since` timestamp NOT NULL DEFAULT current_timestamp(),
-  PRIMARY KEY (`user_id_1`,`user_id_2`)
+  PRIMARY KEY (`user_id_1`,`user_id_2`),
+  KEY `user_id_2` (`user_id_2`),
+  CONSTRAINT `freunde_ibfk_1` FOREIGN KEY (`user_id_1`) REFERENCES `user` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `freunde_ibfk_2` FOREIGN KEY (`user_id_2`) REFERENCES `user` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_german2_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -81,10 +84,8 @@ CREATE TABLE `user` (
   `password` varchar(100) COLLATE utf8_german2_ci NOT NULL,
   `level` int(11) NOT NULL DEFAULT 0,
   `punkte` int(11) NOT NULL DEFAULT 0,
-  `benutzer_typ` varchar(11) COLLATE utf8_german2_ci DEFAULT NULL,
-  `status` int(1) NOT NULL DEFAULT 1,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_german2_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_german2_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -93,7 +94,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (2,'Laurenz','lonzo69420@studzhelp.at','',3,850,NULL,1),(5,'gast','gast@studyhelp.at','d4061b1486fe2da19dd578e8d970f7eb',0,0,NULL,1),(6,'admin','admin@studyhelp.at','21232f297a57a5a743894a0e4a801fc3',0,0,'admin',1);
+INSERT INTO `user` VALUES (1,'Raoul','Raoul.Wograndl@email.at','81dc9bdb52d04dc20036dbd8313ed055 ',0,350),(2,'Paul','Paul.Paul@Paul','81dc9bdb52d04dc20036dbd8313ed055',3,850),(3,'test','test@test','098f6bcd4621d373cade4e832627b4f6',0,0);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -106,4 +107,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-05-19 10:06:55
+-- Dump completed on 2022-05-19 10:46:55
