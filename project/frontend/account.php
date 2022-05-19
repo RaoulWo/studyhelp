@@ -1,8 +1,9 @@
 <?php
     include_once('inc/usersystem.php');
     include_once('inc/errors.php');
-    if (!(isset($_SESSION['benutzer']))) {
-        header("location: index.php");
+    if (!(isset($_SESSION["benutzer"]))){
+        $_SESSION["Fehler"] = "Sie müssen sich zuerst einloggen!";
+        header("location: Fehler.php");
     }
 ?>
 

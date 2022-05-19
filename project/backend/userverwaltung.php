@@ -1,6 +1,8 @@
 <?php 
     session_start();
 
+    $_SESSION['success'] = "";
+
     //Überprüfung ob der Nutzer Berechtigung hat auf dieser Seite zu sein
     if (!(isset($_SESSION['benutzer']['benutzer_typ'])) || $_SESSION['benutzer']['benutzer_typ'] != 'admin') {
         $_SESSION['Fehler'] = 'Sie haben hier nichts verloren!';
