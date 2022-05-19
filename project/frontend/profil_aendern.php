@@ -48,10 +48,10 @@
                     </div>
                     <div class="form-group col-md-12">
                         <label for="usertype">Benutzertyp</label>
-                        <select id="usertype" name="usertyp" class="form-control">
-                                <option selected>Gast </option>
-                                <option>Admin </option>
-                                <option>Servicetechniker</option>
+                        <select id="usertype" name="usertype" class="form-control">
+                                <option value="gast">Gast </option>
+                                <option value="admin">Admin </option>
+                                <option value="servicetechniker">Servicetechniker(in)</option>
                         </select>
                     </div>
                 
@@ -61,5 +61,17 @@
             <button type="submit" name="moduser" class="btn btn-primary btn-block">Speichern</button>
         </form>
     </div>   
+
+        <!-- Include loginModal -->
+        <?php include_once("inc/loginModal.php"); ?>
+
+<!-- JavaScript for LoginModal -->
+<script src="scripts/loginModal.js"></script>
+
+<!-- Include freunde.js file -->
+<script src="scripts/freunde.js"></script>
+
+<!-- JavaScript for Bootstrap5 -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 </body>
 </html>

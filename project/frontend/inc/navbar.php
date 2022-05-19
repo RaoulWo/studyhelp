@@ -12,7 +12,6 @@ $name13 = "logout";
 $link2 = "../frontend/account.php";
 $link3 = $link4 = $link5 = "#";
 // Initialize variables with website names
-$name0 = "STUDYHELP";
 $name1 = "Game";
 // Initialize variables with website links
 $link0 = "../frontend/index.php";
@@ -24,15 +23,12 @@ $link4 = "../frontend/freunde.php";
 
 <nav class="navbar navbar-expand-sm bg-dark navbar-dark sticky-top">
   <div class="container-fluid">
-    <a href="<?php echo $link0; ?>" class="navbar-brand"><?php echo '<i class="fa-solid fa-graduation-cap"></i>' . ' ' . $name0; ?></a>
+    <a href="<?php echo $link0; ?>" class="navbar-brand"><i class="fa-solid fa-graduation-cap"></i> STUDYHELP</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="collapsibleNavbar">
       <ul class="navbar-nav">
-        <!-- <li class="nav-item">
-          <a class="nav-link" href="Link"><?php echo $name9; ?></a>
-        </li> -->
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"><?php echo $name1; ?></a>
           <ul class="dropdown-menu">
@@ -73,7 +69,7 @@ $link4 = "../frontend/freunde.php";
         <span class="navbar-text">
             <span>Sie sind jetzt als <a href="../frontend/account.php"><?php echo $_SESSION['benutzer']['username']; ?></a> eingelogged.
               Nicht <?php echo $_SESSION['benutzer']['username']; ?>?
-              <a href="index.php?logout=true" name="logout">Ausloggen</a></span>
+              <a href="../frontend/index.php?logout=true" name="logout">Ausloggen</a></span>
         </span>
       <?php endif ?>
     </form>

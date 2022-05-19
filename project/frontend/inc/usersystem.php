@@ -113,9 +113,9 @@ if (isset($_POST['moduser'])) {
 
       //Passwort änderung
       if (isset($_POST['password'])){
-        $passwort = md5(mysqli_real_escape_string($db, $_POST['passwort']));
-        $passwort_aendern = "UPDATE user SET password = '$password' WHERE id=" . $_SESSION['ID'];
-        mysqli_query($db,$passwort_aendern);
+        $password = md5(mysqli_real_escape_string($db, $_POST['password']));
+        $chpassword = "UPDATE user SET password = '$password' WHERE id=" . $_SESSION['ID'];
+        mysqli_query($db,$chpassword);
       }
       //Benutzertyp änderung
       if (isset($_POST['usertype'])){
@@ -125,8 +125,8 @@ if (isset($_POST['moduser'])) {
       }
 
       $_SESSION['success'] = "Profildaten wurden erfolgreich geändert";
-      if ($_SESSION['benutzer']['benutzer_typ'] == 'Admin'){
-        header('location: userverwaltung.php');
+      if ($_SESSION['benutzer']['benutzer_typ'] == 'admin'){
+        header('location: ../backend/userverwaltung.php');
       }
       else {
         header('location: index.php');
