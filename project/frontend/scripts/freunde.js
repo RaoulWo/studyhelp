@@ -1,21 +1,28 @@
 "use strict";
 $(function () {
-    loadFriendRequests();
+    loadFriendRequests("ausstehend");
 });
 // Class Definition
 class FriendRequest {
-    constructor(sender, timestamp) {
+    constructor(senderId, receiverId, sender, timestamp) {
+        this.senderId = senderId;
+        this.receiverId = receiverId;
         this.sender = sender;
         this.timestamp = timestamp;
     }
     Log() {
         console.log("-------------");
+        console.log(this.senderId);
+        console.log(this.receiverId);
         console.log(this.sender);
         console.log(this.timestamp);
     }
 }
 class FriendRequests {
     constructor() {
+        this.requests = [];
+    }
+    Clear() {
         this.requests = [];
     }
     Add(requests) {
@@ -72,16 +79,17 @@ const users = new Users();
 const friendRequests = new FriendRequests();
 const FADING_TIME = 500;
 // AJAX-Call to search for friends
-function loadFriendRequests() {
+function loadFriendRequests(status) {
     $.ajax({
         type: "GET",
         url: "../backend/serviceHandler.php",
         cache: false,
-        data: { method: "queryFriendRequests", param: "placeholder" },
+        data: { method: "queryFriendRequests", param: status },
         dataType: "json",
         success: function (response) {
             console.log("Success, AJAX call for 'queryFriendRequests' made");
             console.log(response);
+            friendRequests.Clear();
             response.forEach(function (item) {
                 friendRequests.Add(ConvertItemToFriendRequest(item));
             });
@@ -92,6 +100,28 @@ function loadFriendRequests() {
             console.log("Error, AJAX call for 'queryFriendRequests' failed");
             console.log(response);
         },
+    });
+}
+// AJAX-Call to accept friend request
+function AcceptFriendRequest(senderId) {
+    $.ajax({
+        type: "GET",
+        url: "../backend/serviceHandler.php",
+        cache: false,
+        data: { method: "updateFriendStatus", param: senderId },
+        dataType: "json",
+        success: function (response) { },
+    });
+}
+// AJAX-Call to deny friend request
+function DenyFriendRequest(senderId) {
+    $.ajax({
+        type: "GET",
+        url: "../backend/serviceHandler.php",
+        cache: false,
+        data: { method: "deleteFriendEntries", param: senderId },
+        dataType: "json",
+        success: function (response) { },
     });
 }
 // AJAX-Call to search for Users
@@ -120,13 +150,15 @@ function loadUsers(username) {
     });
 }
 function ConvertItemToFriendRequest(item) {
+    let senderId = item.senderId;
+    let receiverId = item.receiverId;
     let sender = item.sender;
     // Split timestamp into [ Y, M, D, h, m, s ]
     let t = item.timestamp.split(/[- :]/);
     // Apply each element to the Date function
     let d = new Date(Date.UTC(t[0], t[1] - 1, t[2], t[3], t[4], t[5]));
     d.setHours(d.getHours() - 2);
-    return new FriendRequest(sender, d);
+    return new FriendRequest(senderId, receiverId, sender, d);
 }
 function ConvertItemToUser(item) {
     return new User(item.id, item.username);
@@ -142,6 +174,8 @@ function CreateFriendRequestElements(gs) {
         // Assign classes to container
         container.className =
             "friendrequest p-4 mb-3 border border-3 border-dark rounded";
+        container.dataset.senderId = item.senderId;
+        container.dataset.receiverId = item.receiverId;
         // Assigning dataset-attributes to the element
         // Append the new stat to the HTML element with id 'friendRequests'
         $("#friendRequests").append(container);
@@ -209,11 +243,29 @@ function CreateFriendRequestContent(id, sender, ts) {
     btnAccept.id = id + "_Accept";
     btnAccept.className = "btn btn-success me-2";
     btnAccept.innerHTML = '<i class="fa-solid fa-check"></i> Annehmen';
+    btnAccept.onclick = () => {
+        AcceptFriendRequest($(requestId).data("senderId"));
+        fadeOutFriendRequests();
+        setTimeout(() => {
+            destroyFriendRequests();
+            loadFriendRequests("ausstehend");
+            fadeInFriendRequests();
+        }, FADING_TIME);
+    };
     const btnDeny = document.createElement("button");
     btnDeny.setAttribute("type", "button");
     btnDeny.id = id + "_Deny";
     btnDeny.className = "btn btn-danger";
     btnDeny.innerHTML = '<i class="fa-solid fa-xmark"></i> Ablehnen';
+    btnDeny.onclick = () => {
+        DenyFriendRequest($(requestId).data("senderId"));
+        fadeOutFriendRequests();
+        setTimeout(() => {
+            destroyFriendRequests();
+            loadFriendRequests("ausstehend");
+            fadeInFriendRequests();
+        }, FADING_TIME);
+    };
     con2.append(btnAccept);
     con2.append(btnDeny);
     $(requestId).append(con2);

@@ -1,19 +1,30 @@
 $(function () {
-  loadFriendRequests();
+  loadFriendRequests("ausstehend");
 });
 
 // Class Definition
 class FriendRequest {
+  public senderId: string;
+  public receiverId: string;
   public sender: string;
   public timestamp: Date;
 
-  constructor(sender: string, timestamp: Date) {
+  constructor(
+    senderId: string,
+    receiverId: string,
+    sender: string,
+    timestamp: Date
+  ) {
+    this.senderId = senderId;
+    this.receiverId = receiverId;
     this.sender = sender;
     this.timestamp = timestamp;
   }
 
   Log(): void {
     console.log("-------------");
+    console.log(this.senderId);
+    console.log(this.receiverId);
     console.log(this.sender);
     console.log(this.timestamp);
   }
@@ -23,6 +34,10 @@ class FriendRequests {
   public requests: FriendRequest[];
 
   constructor() {
+    this.requests = [];
+  }
+
+  Clear(): void {
     this.requests = [];
   }
 
@@ -87,9 +102,7 @@ class Users {
   }
 
   SortAlphabetically(): void {
-    this.users.sort((a, b) =>
-      a.username.localeCompare(b.username)
-    );
+    this.users.sort((a, b) => a.username.localeCompare(b.username));
   }
 }
 
@@ -99,16 +112,18 @@ const friendRequests: FriendRequests = new FriendRequests();
 const FADING_TIME: number = 500;
 
 // AJAX-Call to search for friends
-function loadFriendRequests(): void {
+function loadFriendRequests(status: string): void {
   $.ajax({
     type: "GET",
     url: "../backend/serviceHandler.php",
     cache: false,
-    data: { method: "queryFriendRequests", param: "placeholder" },
+    data: { method: "queryFriendRequests", param: status },
     dataType: "json",
     success: function (response) {
       console.log("Success, AJAX call for 'queryFriendRequests' made");
       console.log(response);
+
+      friendRequests.Clear();
 
       response.forEach(function (item: FriendRequest) {
         friendRequests.Add(ConvertItemToFriendRequest(item));
@@ -121,6 +136,30 @@ function loadFriendRequests(): void {
       console.log("Error, AJAX call for 'queryFriendRequests' failed");
       console.log(response);
     },
+  });
+}
+
+// AJAX-Call to accept friend request
+function AcceptFriendRequest(senderId: string) {
+  $.ajax({
+    type: "GET",
+    url: "../backend/serviceHandler.php",
+    cache: false,
+    data: { method: "updateFriendStatus", param: senderId },
+    dataType: "json",
+    success: function (response) {},
+  });
+}
+
+// AJAX-Call to deny friend request
+function DenyFriendRequest(senderId: string) {
+  $.ajax({
+    type: "GET",
+    url: "../backend/serviceHandler.php",
+    cache: false,
+    data: { method: "deleteFriendEntries", param: senderId },
+    dataType: "json",
+    success: function (response) {},
   });
 }
 
@@ -145,8 +184,6 @@ function loadUsers(username: string): void {
       response.forEach((item: User) => {
         CreateUserListElement(item);
       });
-
-
     },
     error: function (response) {
       console.log("Error, AJAX call for 'queryUsersByUsername' failed");
@@ -156,6 +193,9 @@ function loadUsers(username: string): void {
 }
 
 function ConvertItemToFriendRequest(item: any): FriendRequest {
+  let senderId = item.senderId;
+  let receiverId = item.receiverId;
+
   let sender = item.sender;
 
   // Split timestamp into [ Y, M, D, h, m, s ]
@@ -164,7 +204,7 @@ function ConvertItemToFriendRequest(item: any): FriendRequest {
   let d = new Date(Date.UTC(t[0], t[1] - 1, t[2], t[3], t[4], t[5]));
   d.setHours(d.getHours() - 2);
 
-  return new FriendRequest(sender, d);
+  return new FriendRequest(senderId, receiverId, sender, d);
 }
 
 function ConvertItemToUser(item: any): User {
@@ -182,6 +222,8 @@ function CreateFriendRequestElements(gs: FriendRequests): void {
     // Assign classes to container
     container.className =
       "friendrequest p-4 mb-3 border border-3 border-dark rounded";
+    container.dataset.senderId = item.senderId;
+    container.dataset.receiverId = item.receiverId;
     // Assigning dataset-attributes to the element
     // Append the new stat to the HTML element with id 'friendRequests'
     $("#friendRequests").append(container);
@@ -270,12 +312,30 @@ function CreateFriendRequestContent(
   btnAccept.id = id + "_Accept";
   btnAccept.className = "btn btn-success me-2";
   btnAccept.innerHTML = '<i class="fa-solid fa-check"></i> Annehmen';
+  btnAccept.onclick = () => {
+    AcceptFriendRequest($(requestId).data("senderId"));
+    fadeOutFriendRequests();
+    setTimeout(() => {
+      destroyFriendRequests();
+      loadFriendRequests("ausstehend");
+      fadeInFriendRequests();
+    }, FADING_TIME);
+  };
 
   const btnDeny = document.createElement("button");
   btnDeny.setAttribute("type", "button");
   btnDeny.id = id + "_Deny";
   btnDeny.className = "btn btn-danger";
   btnDeny.innerHTML = '<i class="fa-solid fa-xmark"></i> Ablehnen';
+  btnDeny.onclick = () => {
+    DenyFriendRequest($(requestId).data("senderId"));
+    fadeOutFriendRequests();
+    setTimeout(() => {
+      destroyFriendRequests();
+      loadFriendRequests("ausstehend");
+      fadeInFriendRequests();
+    }, FADING_TIME);
+  };
 
   con2.append(btnAccept);
   con2.append(btnDeny);

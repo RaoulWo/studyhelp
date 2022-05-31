@@ -121,7 +121,7 @@ class DataHandler
         return $result;
     }
 
-    public function queryFriendRequests() {
+    public function queryFriendRequests($status) {
         $dbConnection = $this->openUserConnection();
         if(!$dbConnection) { // if connection failed return null
             return "ERROR NO DB CONNECTION";
@@ -135,8 +135,8 @@ class DataHandler
 
         $result = array();
 
-        $sqlStatement = "SELECT username, friends_since FROM user INNER JOIN freunde ON id = user_id_1 WHERE
-        user_id_2 = $receiverId AND status = 'ausstehend'";
+        $sqlStatement = "SELECT user_id_1, user_id_2, username, friends_since FROM user INNER JOIN freunde ON id = user_id_1 WHERE
+        user_id_2 = $receiverId AND freunde.status ='" .  $status . "'";
         $sqlQuery = $dbConnection->query($sqlStatement);
         while ($row = $sqlQuery->fetch_assoc()) {
             array_push($result, $this->convertToFriendRequestObject($row));
@@ -174,6 +174,39 @@ class DataHandler
         return $result;
     }
   
+    public function updateFriendStatus($senderId) {
+        $dbConnection = $this->openUserConnection();
+        if(!$dbConnection) { // if connection failed return null
+            return "ERROR NO DB CONNECTION";
+        }
+
+        if (!isset($_SESSION["benutzer"])) {
+            return "NO USER LOGGED IN";
+        }
+
+        $receiverId = $_SESSION["benutzer"]["id"];
+
+        $sqlStatement = "UPDATE freunde SET status = 'freunde' WHERE user_id_1 = $senderId AND user_id_2 = $receiverId OR
+            user_id_1 = $receiverId AND user_id_2 = $senderId";
+        $sqlQuery = $dbConnection->query($sqlStatement);
+    }
+
+    public function deleteFriendEntries($senderId) {
+        $dbConnection = $this->openUserConnection();
+        if(!$dbConnection) { // if connection failed return null
+            return "ERROR NO DB CONNECTION";
+        }
+
+        if (!isset($_SESSION["benutzer"])) {
+            return "NO USER LOGGED IN";
+        }
+
+        $receiverId = $_SESSION["benutzer"]["id"];
+
+        $sqlStatement = "DELETE FROM freunde WHERE user_id_1 = $senderId AND user_id_2 = $receiverId OR
+            user_id_1 = $receiverId AND user_id_2 = $senderId";
+        $sqlQuery = $dbConnection->query($sqlStatement);
+    }   
 
     // #### Private Methods ####
     private function openVocabConnection() { // returns false if connection failed, else returns mysqli-object
@@ -225,10 +258,12 @@ class DataHandler
     }
 
     private function convertToFriendRequestObject($assoc) {
+        $senderId = $assoc["user_id_1"];
+        $receiverId = $assoc["user_id_2"];
         $sender = $assoc["username"];
         $timestamp = $assoc["friends_since"];
 
-        return new FriendRequest($sender, $timestamp);
+        return new FriendRequest($senderId, $receiverId, $sender, $timestamp);
     }
 
 

@@ -25,10 +25,16 @@ class Logic
                 $res = $this->dh->queryGameStatisticsByUser();
                 break;
             case "queryFriendRequests":
-                $res = $this->dh->queryFriendRequests();
+                $res = $this->dh->queryFriendRequests($param);
                 break;
             case "queryUsersByUsername":
                 $res = $this->dh->queryUsersByUsername($param);
+                break;
+            case "updateFriendStatus":
+                $res = $this->dh->updateFriendStatus($param);
+                break;
+            case "deleteFriendEntries":
+                $res = $this->dh->deleteFriendEntries($param);
                 break;
             default:
                 $res = null;
