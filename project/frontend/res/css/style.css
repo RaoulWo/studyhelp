@@ -4,7 +4,6 @@
     }
 }
 
-
 .activeModeForLoginModal {
     color: #2470e2;
     background-color: #d5ebfd;
@@ -18,4 +17,8 @@
     color: #363636;
     border: 2px solid #dadada;
     border-radius: 7px;
+}
+
+#userlistcontainer {
+    min-height: 200px;
 }

@@ -23,6 +23,15 @@ session_start();
             </div>
         </div>
     </form>
+    <div class="p-4">
+        <div class="container">
+            <div id="userlistcontainer" class="text-sm-start text-center">
+                <ul id="userlist" class="list-group">
+
+                </ul>
+            </div>
+        </div>
+    </div>
 
 
     <hr>

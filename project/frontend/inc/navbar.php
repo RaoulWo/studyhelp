@@ -33,8 +33,8 @@ $link4 = "../frontend/freunde.php";
           <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"><?php echo $name1; ?></a>
           <ul class="dropdown-menu">
             <li><a class="dropdown-item" href="<?php echo $link1; ?>"><?php echo $name1; ?>1</a></li>
-            <li><a class="dropdown-item" href="link"><?php echo $name1; ?>2</a></li>
-            <li><a class="dropdown-item" href="Link"><?php echo $name1; ?>3</a></li>
+            <li><a class="dropdown-item" href="#"><?php echo $name1; ?>2</a></li>
+            <li><a class="dropdown-item" href="#"><?php echo $name1; ?>3</a></li>
           </ul>
         </li>
         <?php if ((isset($_SESSION["benutzer"]))) : ?>

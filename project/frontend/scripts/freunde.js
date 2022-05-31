@@ -37,7 +37,38 @@ class FriendRequests {
         });
     }
 }
+class User {
+    constructor(id, username) {
+        this.id = id;
+        this.username = username;
+    }
+    Log() {
+        console.log("-------------");
+        console.log(this.id);
+        console.log(this.username);
+    }
+}
+class Users {
+    constructor() {
+        this.users = [];
+    }
+    Clear() {
+        this.users = [];
+    }
+    Add(user) {
+        this.users.push(user);
+    }
+    Log() {
+        this.users.forEach((item) => {
+            item.Log();
+        });
+    }
+    SortAlphabetically() {
+        this.users.sort((a, b) => a.username.localeCompare(b.username));
+    }
+}
 // #### Global Variables ####
+const users = new Users();
 const friendRequests = new FriendRequests();
 const FADING_TIME = 500;
 // AJAX-Call to search for friends
@@ -63,6 +94,31 @@ function loadFriendRequests() {
         },
     });
 }
+// AJAX-Call to search for Users
+function loadUsers(username) {
+    $.ajax({
+        type: "GET",
+        url: "../backend/serviceHandler.php",
+        cache: false,
+        data: { method: "queryUsersByUsername", param: username },
+        dataType: "json",
+        success: function (response) {
+            //console.log("Success, AJAX call for 'queryUsersByUsername' made");
+            //console.log(response);
+            response.forEach(function (item) {
+                users.Add(ConvertItemToUser(item));
+            });
+            users.SortAlphabetically();
+            response.forEach((item) => {
+                CreateUserListElement(item);
+            });
+        },
+        error: function (response) {
+            console.log("Error, AJAX call for 'queryUsersByUsername' failed");
+            console.log(response);
+        },
+    });
+}
 function ConvertItemToFriendRequest(item) {
     let sender = item.sender;
     // Split timestamp into [ Y, M, D, h, m, s ]
@@ -71,6 +127,9 @@ function ConvertItemToFriendRequest(item) {
     let d = new Date(Date.UTC(t[0], t[1] - 1, t[2], t[3], t[4], t[5]));
     d.setHours(d.getHours() - 2);
     return new FriendRequest(sender, d);
+}
+function ConvertItemToUser(item) {
+    return new User(item.id, item.username);
 }
 function CreateFriendRequestElements(gs) {
     let count = 0;
@@ -90,6 +149,14 @@ function CreateFriendRequestElements(gs) {
         // Increment count
         count++;
     });
+}
+function CreateUserListElement(user) {
+    const li = document.createElement("li");
+    li.className = "list-group-item list-group-item-action";
+    li.dataset.id = user.id;
+    li.dataset.username = user.username;
+    li.innerHTML = user.username;
+    $("#userlist").append(li);
 }
 function CreateFriendRequestContent(id, sender, ts) {
     let requestId = "#" + id;
@@ -207,6 +274,12 @@ function destroyFriendRequests() {
         myNode.removeChild(myNode.lastChild);
     }
 }
+function destroyUserListElements() {
+    const myNode = document.getElementById("userlist");
+    while (myNode.firstChild) {
+        myNode.removeChild(myNode.lastChild);
+    }
+}
 function fadeOutFriendRequests() {
     $("#friendRequests").fadeOut(FADING_TIME);
 }
@@ -230,4 +303,9 @@ $("#datesDesc").on("click", () => {
         CreateFriendRequestElements(friendRequests);
         fadeInFriendRequests();
     }, FADING_TIME);
+});
+$("#friend").on("input", () => {
+    users.Clear();
+    destroyUserListElements();
+    loadUsers($("#friend").val().toString());
 });

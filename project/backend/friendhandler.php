@@ -18,6 +18,7 @@ function addFriend($db){
     $sendrequest_query = "INSERT INTO freunde (user_id_1, user_id_2) VALUES ($user1_id, $user2_id)";
     $result = mysqli_query($db, $sendrequest_query);
     echo "<script>alert(test);</script>";
+    header("location: ../frontend/freunde.php");
 }
 
 ?>

@@ -27,6 +27,9 @@ class Logic
             case "queryFriendRequests":
                 $res = $this->dh->queryFriendRequests();
                 break;
+            case "queryUsersByUsername":
+                $res = $this->dh->queryUsersByUsername($param);
+                break;
             default:
                 $res = null;
                 break;

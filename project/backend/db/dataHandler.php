@@ -7,6 +7,7 @@ include("./models/friendRequest.php");
 include ("./models/gameStatistics.php");
 include("./models/gameResult.php");
 include("./models/vocabPair.php");
+include("./models/user.php");
 
 // Definition of DataHandler-Class
 class DataHandler
@@ -143,6 +144,36 @@ class DataHandler
         return $result;
     }
 
+    public function queryUsersByUsername($input) {
+        $dbConnection = $this->openUserConnection();
+        if(!$dbConnection) { // if connection failed return null
+            return "ERROR NO DB CONNECTION";
+        }
+
+        if (!isset($_SESSION["benutzer"])) {
+            return "NO USER LOGGED IN";
+        }
+
+        $userId = $_SESSION["benutzer"]["id"];
+        $username = $_SESSION["benutzer"]["username"];
+
+        $result = array();
+
+        if ($input == "")
+        {
+            return;
+        }
+
+        $str = $input . "%";
+
+        $sqlStatement = "SELECT id, username FROM user WHERE id != '" . $userId . "' AND username LIKE '" . $str . "'";
+        $sqlQuery = $dbConnection->query($sqlStatement);
+        while ($row = $sqlQuery->fetch_assoc()) {
+            array_push($result, $this->convertToUserObject($row));
+        }
+        return $result;
+    }
+  
 
     // #### Private Methods ####
     private function openVocabConnection() { // returns false if connection failed, else returns mysqli-object
@@ -198,6 +229,15 @@ class DataHandler
         $timestamp = $assoc["friends_since"];
 
         return new FriendRequest($sender, $timestamp);
+    }
+
+
+    private function convertToUserObject($assoc)
+    {
+        $id = $assoc["id"];
+        $username = $assoc["username"];
+
+        return new User($id, $username);
     }
 }
 
