@@ -1,4 +1,5 @@
 $(function () {
+  loadFriends("freunde");
   loadFriendRequests("ausstehend");
 });
 
@@ -108,10 +109,38 @@ class Users {
 
 // #### Global Variables ####
 const users: Users = new Users();
+const friends: FriendRequests = new FriendRequests();
 const friendRequests: FriendRequests = new FriendRequests();
 const FADING_TIME: number = 500;
 
 // AJAX-Call to search for friends
+function loadFriends(status: string): void {
+  $.ajax({
+    type: "GET",
+    url: "../backend/serviceHandler.php",
+    cache: false,
+    data: { method: "queryFriendRequests", param: status },
+    dataType: "json",
+    success: function (response) {
+      console.log("Success, AJAX call for 'queryFriendRequests' made");
+      console.log(response);
+
+      friends.Clear();
+
+      response.forEach(function (item: FriendRequest) {
+        friends.Add(ConvertItemToFriendRequest(item));
+      });
+
+      CreateFriendElements(friends);
+    },
+    error: function (response) {
+      console.log("Error, AJAX call for 'queryFriendRequests' failed");
+      console.log(response);
+    },
+  });
+}
+
+// AJAX-Call to search for friendRequests
 function loadFriendRequests(status: string): void {
   $.ajax({
     type: "GET",
@@ -128,6 +157,8 @@ function loadFriendRequests(status: string): void {
       response.forEach(function (item: FriendRequest) {
         friendRequests.Add(ConvertItemToFriendRequest(item));
       });
+
+      users.SortAlphabetically();
 
       // friendRequests.Log();
       CreateFriendRequestElements(friendRequests);
@@ -186,8 +217,8 @@ function loadUsers(username: string): void {
       });
     },
     error: function (response) {
-      console.log("Error, AJAX call for 'queryUsersByUsername' failed");
-      console.log(response);
+      // console.log("Error, AJAX call for 'queryUsersByUsername' failed");
+      // console.log(response);
     },
   });
 }
@@ -209,6 +240,28 @@ function ConvertItemToFriendRequest(item: any): FriendRequest {
 
 function ConvertItemToUser(item: any): User {
   return new User(item.id, item.username);
+}
+
+function CreateFriendElements(gs: FriendRequests): void {
+  let count = 0;
+  gs.requests.forEach((item: FriendRequest) => {
+    // Create new div container for FriendRequest
+    const container: HTMLDivElement = document.createElement("div");
+    // Assign ID to container
+    let containerId = "friend_" + count;
+    container.id = containerId;
+    // Assign classes to container
+    container.className = "friend p-4 mb-3 border border-3 border-dark rounded";
+    container.dataset.senderId = item.senderId;
+    container.dataset.receiverId = item.receiverId;
+    // Assigning dataset-attributes to the element
+    // Append the new stat to the HTML element with id 'friendRequests'
+    $("#friends").append(container);
+    CreateFriendContent(containerId, item.sender, item.timestamp);
+
+    // Increment count
+    count++;
+  });
 }
 
 function CreateFriendRequestElements(gs: FriendRequests): void {
@@ -242,6 +295,55 @@ function CreateUserListElement(user: User): void {
   li.innerHTML = user.username;
 
   $("#userlist").append(li);
+}
+
+function CreateFriendContent(id: string, sender: string, ts: Date): void {
+  let requestId = "#" + id;
+
+  // Create header for request-element
+  const header = document.createElement("h2");
+  header.className = "text-sm-start text-center";
+  header.innerHTML = "<i class='fa-solid fa-user'></i> " + sender;
+  $(requestId).append(header);
+
+  // Add horizontal rule
+  $(requestId).append(document.createElement("hr"));
+
+  // Create div container in order to align content horizontally
+  const con = document.createElement("div");
+  con.className = "p-2";
+
+  // Create paragraph for date
+
+  let year = ts.getFullYear();
+  let month = convertToMonth(ts.getMonth());
+  let day = ts.getDate();
+  let weekday = convertToWeekday(ts.getDay());
+  let hours = ts.getHours();
+  let minutes: number | string = ts.getMinutes();
+  if (minutes >= 0 && minutes <= 9) {
+    minutes = "0" + minutes;
+  }
+
+  let str =
+    weekday +
+    ". " +
+    day +
+    " " +
+    month +
+    " " +
+    year +
+    " " +
+    hours +
+    ":" +
+    minutes;
+
+  const date = document.createElement("p");
+  date.className = "lead text-sm-start text-center";
+  date.innerHTML = '<i class="fa-solid fa-calendar"></i> Freunde seit: ' + str;
+  con.append(date);
+
+  $(requestId).append(con);
 }
 
 function CreateFriendRequestContent(
@@ -317,7 +419,10 @@ function CreateFriendRequestContent(
     fadeOutFriendRequests();
     setTimeout(() => {
       destroyFriendRequests();
+      destroyFriends();
+      loadFriends("freunde");
       loadFriendRequests("ausstehend");
+      fadeInFriends();
       fadeInFriendRequests();
     }, FADING_TIME);
   };
@@ -330,6 +435,7 @@ function CreateFriendRequestContent(
   btnDeny.onclick = () => {
     DenyFriendRequest($(requestId).data("senderId"));
     fadeOutFriendRequests();
+    fadeOutFriends();
     setTimeout(() => {
       destroyFriendRequests();
       loadFriendRequests("ausstehend");
@@ -394,6 +500,13 @@ function convertToMonth(month: number): string {
   }
 }
 
+function destroyFriends(): void {
+  const myNode = document.getElementById("friends");
+  while (myNode!.firstChild) {
+    myNode!.removeChild(myNode!.lastChild!);
+  }
+}
+
 function destroyFriendRequests(): void {
   const myNode = document.getElementById("friendRequests");
   while (myNode!.firstChild) {
@@ -414,6 +527,14 @@ function fadeOutFriendRequests(): void {
 
 function fadeInFriendRequests(): void {
   $("#friendRequests").fadeIn(FADING_TIME);
+}
+
+function fadeOutFriends(): void {
+  $("#friends").fadeOut(FADING_TIME);
+}
+
+function fadeInFriends(): void {
+  $("#friends").fadeIn(FADING_TIME);
 }
 
 $("#datesAsc").on("click", () => {
