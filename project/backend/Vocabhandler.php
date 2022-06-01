@@ -1,8 +1,10 @@
 <?php
 
+include('Vocabhandler.html');
+
 if (!(isset($_SESSION['benutzer']['benutzer_typ'])) || $_SESSION['benutzer']['benutzer_typ'] != 'Admin') {
     $_SESSION['Fehler'] = 'Sie haben hier nichts verloren!';
-    header("location: Fehler.php");
+    header("location: ../frontend/Fehler.php");
   }
 
 

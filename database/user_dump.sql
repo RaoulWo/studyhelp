@@ -19,6 +19,33 @@
 -- Table structure for table `freunde`
 --
 
+DROP TABLE IF EXISTS `user`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `user` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `username` varchar(100) COLLATE utf8_german2_ci NOT NULL,
+  `email` varchar(100) COLLATE utf8_german2_ci NOT NULL,
+  `password` varchar(100) COLLATE utf8_german2_ci NOT NULL,
+  `level` int(11) NOT NULL DEFAULT 0,
+  `punkte` int(11) NOT NULL DEFAULT 0,
+  `benutzer_typ` varchar(11) COLLATE utf8_german2_ci DEFAULT NULL,
+  `status` int(1) NOT NULL DEFAULT 1,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COLLATE=utf8_german2_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `user`
+--
+
+LOCK TABLES `user` WRITE;
+/*!40000 ALTER TABLE `user` DISABLE KEYS */;
+INSERT INTO `user` VALUES (2,'Laurenz','lonzo69420@studzhelp.at','fd5d64fee4c4d8ca7e80bcf2f005a80a',3,850,'gast',1),(5,'gast','gast@studyhelp.at','d4061b1486fe2da19dd578e8d970f7eb',0,0,NULL,1),(6,'admin','admin@studyhelp.at','21232f297a57a5a743894a0e4a801fc3',0,0,'admin',1),(7,'alex','alex@alex.at','534b44a19bf18d20b71ecc4eb77c572f',0,0,NULL,1),(8,'alex2','alex2@alex2.at','53ebbc46d08e9224f6a45f8f2bf3d3ae',0,0,NULL,1);
+/*!40000 ALTER TABLE `user` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
 DROP TABLE IF EXISTS `freunde`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -75,33 +102,6 @@ UNLOCK TABLES;
 --
 -- Table structure for table `user`
 --
-
-DROP TABLE IF EXISTS `user`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `user` (
-  `id` int(10) NOT NULL AUTO_INCREMENT,
-  `username` varchar(100) COLLATE utf8_german2_ci NOT NULL,
-  `email` varchar(100) COLLATE utf8_german2_ci NOT NULL,
-  `password` varchar(100) COLLATE utf8_german2_ci NOT NULL,
-  `level` int(11) NOT NULL DEFAULT 0,
-  `punkte` int(11) NOT NULL DEFAULT 0,
-  `benutzer_typ` varchar(11) COLLATE utf8_german2_ci DEFAULT NULL,
-  `status` int(1) NOT NULL DEFAULT 1,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COLLATE=utf8_german2_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `user`
---
-
-LOCK TABLES `user` WRITE;
-/*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (2,'Laurenz','lonzo69420@studzhelp.at','fd5d64fee4c4d8ca7e80bcf2f005a80a',3,850,'gast',1),(5,'gast','gast@studyhelp.at','d4061b1486fe2da19dd578e8d970f7eb',0,0,NULL,1),(6,'admin','admin@studyhelp.at','21232f297a57a5a743894a0e4a801fc3',0,0,'admin',1),(7,'alex','alex@alex.at','534b44a19bf18d20b71ecc4eb77c572f',0,0,NULL,1),(8,'alex2','alex2@alex2.at','53ebbc46d08e9224f6a45f8f2bf3d3ae',0,0,NULL,1);
-/*!40000 ALTER TABLE `user` ENABLE KEYS */;
-UNLOCK TABLES;
-/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

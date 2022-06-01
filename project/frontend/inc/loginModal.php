@@ -1,3 +1,5 @@
+<?php if (session_status() === PHP_SESSION_NONE){session_start();} ?>
+
 <!-- Modal -->
 <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
