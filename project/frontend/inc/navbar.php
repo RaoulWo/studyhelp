@@ -56,6 +56,7 @@ $link4 = "../frontend/freunde.php";
         </li> -->
         <?php if (isset($_SESSION['benutzer']['benutzer_typ']) && $_SESSION['benutzer']['benutzer_typ'] == 'admin') : ?>
         <li class="nav-item"><a class="nav-link" href="../backend/userverwaltung.php"><?php echo $name10; ?></a></li>
+        <li class="nav-item"><a class="nav-link" href="../backend/Vocabhandler.html">Vokabular hinzufügen</a></li>
         <?php endif ?>
       </ul>
     </div>

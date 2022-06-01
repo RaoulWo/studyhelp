@@ -1,7 +1,4 @@
-<?php 
-session_start();
-?>
-
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,7 +8,9 @@ session_start();
 </head>
 <body>
     <!-- Include Navbar -->
-    <?php include_once("inc/navbar.php"); ?>    
+    <?php
+        include_once("inc/navbar.php"); 
+    ?>    
 
     <div class="p-4">
         <div class="container">
@@ -68,7 +67,12 @@ session_start();
     
 
 
-
+    <?php
+        if (isset($_SESSION["fq_succ"])){
+                echo $_SESSION["fq_succ"];
+            }
+        unset($_SESSION["fq_succ"]);
+    ?>
 
     <!-- Include loginModal -->
     <?php include_once("inc/loginModal.php"); ?>
