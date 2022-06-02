@@ -40,7 +40,7 @@ $imgURL = 'inc/bilder/'.$img1["bild"];
           </div>
         </div>
         <br>
-        Levelfortschritt: <progress max="1000" value="<?php echo $points; ?>"></progress>
+        Levelfortschritt: <progress max="1000" value="<?php echo $points['punkte']; ?>"></progress>
       </div>
 
       <!-- Modal footer -->
