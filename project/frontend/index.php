@@ -57,68 +57,7 @@
     </section>
     <?php endif ?>
     
-    <!--Boxen-->
-    <section class="p-5">
-        <div class="container">
-            <div class="row text-center g-4">
-                <div class="col-md">
-                    <div class="card bg-dark text-light">
-                     <div class="card-body text-center">
-                        <div class="h1 mb-3">
-                            <i class="bi bi-laptop"></i>
-                        </div>
-                        <h3 class="card-title mb-3">
-                            Laptop
-                        </h3>
-                        <p class="card-text">
-                        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Aut eaque distinctio rem reprehenderit, accusamus et?
-                        </p>
-                        <a href="#" class="btn btn-primary">Hier Klicken!</a>
-                     </div>   
-                        
-
-                    </div>
-                </div>
-                <div class="col-md">
-                    <div class="card bg-secondary text-light">
-                        <div class="card-body text-center">
-                           <div class="h1 mb-3">
-                               <i class="bi bi-controller"></i>
-                           </div>
-                           <h3 class="card-title mb-3">
-                               Vokabelspiel
-                           </h3>
-                           <p class="card-text">
-                           Teste deine Vokabelkentnisse in einem Spiel, wo du Vokabeln von verschiedenen Sprachen vereinigen sollst!
-                           </p>
-                           <a href="game.php" class="btn btn-dark">Zum Spiel!</a>
-                        </div>   
-                           
    
-                       </div>
-                </div>
-                <div class="col-md">
-                    <div class="card bg-dark text-light">
-                        <div class="card-body text-center">
-                           <div class="h1 mb-3">
-                               <i class="bi bi-joystick"></i>
-                           </div>
-                           <h3 class="card-title mb-3">
-                               Joystick
-                           </h3>
-                           <p class="card-text">
-                           Lorem ipsum dolor, sit amet consectetur adipisicing elit. Aut eaque distinctio rem reprehenderit, accusamus et?
-                           </p>
-                           <a href="#" class="btn btn-primary">Hier Klicken!</a>
-                        </div>   
-                           
-   
-                       </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
     <!--Section-->
     <section id="learn" class="p-5">
         <div class="container">
@@ -127,16 +66,12 @@
                     <img src="res/img/gaming.svg" class="img-fluid" alt="">
                 </div>
                 <div class="col-md p-5">
-                    <h2>Gamingbereich/Content</h2>
+                    <h2>Vokabelspiel</h2>
                     <p class="lead">
-                        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Incidunt eum unde commodi molestias. Aliquam, necessitatibus!
+                      Teste deine Vokabelkentnisse in einem Spiel, wo du Vokabeln von verschiedenen Sprachen vereinigen sollst!
                     </p>
-                    <p>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam repellendus, numquam ad nesciunt delectus dolor atque, reprehenderit iusto sint et minus ratione molestiae fugit voluptate ipsam, culpa veritatis adipisci sed?
-                    </p>
-                    <a href="#" class="btn btn-light mt-3">
-                        <i class="bi bi-chevron-right">Hier Klicken</i>
-                    </a>
+                   
+                    <a href="game.php" class="btn btn-dark">Zum Spiel!</a>
                 </div>
 
             </div>
@@ -156,7 +91,7 @@
                     <p>
                        Hier kannst du dein Level, deine Erfolge und dein Spielverlauf sehen.
                     </p>
-                    <a href="#" class="btn btn-light mt-3">
+                    <a href="account.php" class="btn btn-light mt-3">
                         <i class="bi bi-chevron-right">Hier Klicken</i>
                     </a>
                 </div>

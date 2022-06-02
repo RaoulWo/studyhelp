@@ -12,7 +12,7 @@ $name13 = "logout";
 $link2 = "../frontend/account.php";
 $link3 = $link4 = $link5 = "#";
 // Initialize variables with website names
-$name1 = "Game";
+$name1 = "Vokabelspiel";
 // Initialize variables with website links
 $link0 = "../frontend/index.php";
 $link1 = "../frontend/game.php";
@@ -32,9 +32,9 @@ $link4 = "../frontend/freunde.php";
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"><?php echo $name1; ?></a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="<?php echo $link1; ?>"><?php echo $name1; ?>1</a></li>
-            <li><a class="dropdown-item" href="#"><?php echo $name1; ?>2</a></li>
-            <li><a class="dropdown-item" href="#"><?php echo $name1; ?>3</a></li>
+            <li><a class="dropdown-item" href="<?php echo $link1; ?>"><?php echo $name1; ?></a></li>
+            <!-- <li><a class="dropdown-item" href="#"><?php echo $name1; ?>2</a></li>
+             <li><a class="dropdown-item" href="#"><?php echo $name1; ?>3</a></li> -->
           </ul>
         </li>
         <?php if ((isset($_SESSION["benutzer"]))) : ?>
@@ -43,7 +43,7 @@ $link4 = "../frontend/freunde.php";
           <ul class="dropdown-menu">
             <li><a class="dropdown-item" href="<?php echo $link2; ?>"><?php echo $name2, $name3; ?></a></li>
             <li><a class="dropdown-item" href="<?php echo $link4; ?>"><?php echo $name4; ?></a></li>
-            <li><a class="dropdown-item" href="Link"><?php echo $name2, $name5; ?></a></li>
+            <!-- <li><a class="dropdown-item" href="Link"><?php echo $name2, $name5; ?></a></li> -->
           </ul>
         </li>
         <?php endif ?>
