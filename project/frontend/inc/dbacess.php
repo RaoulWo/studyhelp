@@ -66,6 +66,9 @@ if (isset($_POST['reg_user'])) {
       $benutzer = mysqli_fetch_assoc($result);
       $_SESSION['benutzer'] = $benutzer;
       $_SESSION['success'] = "Sie sind jetzt eingelogged!";
+      $query3 = "SELECT id FROM user WHERE username='$username'";
+      $uid = mysqli_fetch_assoc(mysqli_query($db, $query3));
+      $_SESSION['uid'] = $uid['id'];
     }
   }
 }
@@ -96,6 +99,9 @@ if (isset($_POST['login_user'])) {
         $query2 = "SELECT email FROM user WHERE username='$username'";
         $umail = mysqli_fetch_assoc(mysqli_query($db, $query2));
         $_SESSION['mail'] = $umail['email'];
+        $query3 = "SELECT id FROM user WHERE username='$username'";
+        $uid = mysqli_fetch_assoc(mysqli_query($db, $query3));
+        $_SESSION['uid'] = $uid['id'];
       }
       else {
           array_push($errors, "Falscher Username oder falsches Passwort oder Account deaktiviert. Bitte versuchen Sie es erneut!");

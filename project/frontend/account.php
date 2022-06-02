@@ -22,8 +22,19 @@
 </head>
 <body class="bg-info">
     <!-- Include Navbar -->
-    <?php include_once("inc/navbar.php"); ?>    
+    <?php include_once("inc/navbar.php"); ?> 
+    
+    <?php include_once("inc/profile.php"); ?>
 
+
+    <?php
+        $db1 = mysqli_connect('localhost', 'root', '', 'user');
+        $username = $_SESSION['benutzer']['username'];
+        $pts1 = "SELECT punkte FROM user WHERE username='$username'";
+        $points1 = mysqli_fetch_assoc(mysqli_query($db1, $pts1));
+        $lvl1 = "SELECT level FROM user WHERE username='$username'";
+        $lvls1 = mysqli_fetch_assoc(mysqli_query($db1, $lvl));
+    ?>
     
     
 
@@ -36,12 +47,33 @@
                     <div class="col-lg">
                         <span>Username:<br><br>
                         Email:<br><br>
+                        Level:<br><br>
                         Punkte:<br><br>
+                        <a href="profil_aendern.php?user=<?php echo $_SESSION['benutzer']['id']; ?>">Profil bearbeiten</a>
                         </span>
                     </div>
                     <div class="col-lg">
                         <?php echo $_SESSION['benutzer']['username'];?><br><br>
+<<<<<<< Updated upstream
                         <?php echo $_SESSION['mail'];?>
+=======
+                        <?php echo $_SESSION['mail'];?><br><br>
+                        <?php echo $lvls['level'];?> <br><br>
+                        <?php echo $points1['punkte'];?><br><br>
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
+                        Open Profile
+                        </button>
+                    </div>
+                    <div class="container">
+                        <div id="content">  
+                            <form action="profilepic.php" method="post" enctype="multipart/form-data">
+                                <br><br>
+                                Profilbild hochladen:
+                                <input type="file" name="file">
+                                <input type="submit" name="submit" value="Upload">
+                            </form>
+                        </div>
+>>>>>>> Stashed changes
                     </div>
                 </div>
             </div>

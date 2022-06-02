@@ -170,6 +170,7 @@
 
     <!-- Include loginModal -->
     <?php include_once("inc/loginModal.php"); ?>
+    <?php include_once("inc/profile.php"); ?>
 
     <!-- JavaScript for LoginModal -->
     <script src="scripts/loginModal.js"></script>
