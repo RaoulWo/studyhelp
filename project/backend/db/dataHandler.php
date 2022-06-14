@@ -135,8 +135,11 @@ class DataHandler
 
         $result = array();
 
-        $sqlStatement = "SELECT user_id_1, user_id_2, username, friends_since FROM user INNER JOIN freunde ON id = user_id_1 WHERE
-        user_id_2 = $receiverId AND freunde.status ='" .  $status . "'";
+        $sqlStatement = "SELECT user_id_1, user_id_2, username, friends_since, user.level, MAX(gameresults.punkte) AS punkte
+        FROM user 
+        INNER JOIN freunde ON id = user_id_1 
+        LEFT OUTER JOIN gameresults ON user_id_1 = fk_user_id WHERE
+        user_id_2 = $receiverId AND freunde.status ='" .  $status . "' GROUP BY user_id_1";
         $sqlQuery = $dbConnection->query($sqlStatement);
         while ($row = $sqlQuery->fetch_assoc()) {
             array_push($result, $this->convertToFriendRequestObject($row));
@@ -166,7 +169,7 @@ class DataHandler
 
         $str = $input . "%";
 
-        $sqlStatement = "SELECT id, username FROM user WHERE id != '" . $userId . "' AND username LIKE '" . $str . "'";
+        $sqlStatement = "SELECT DISTINCT id, username FROM user WHERE id != '" . $userId . "' AND username LIKE '" . $str . "'";
         $sqlQuery = $dbConnection->query($sqlStatement);
         while ($row = $sqlQuery->fetch_assoc()) {
             array_push($result, $this->convertToUserObject($row));
@@ -262,8 +265,10 @@ class DataHandler
         $receiverId = $assoc["user_id_2"];
         $sender = $assoc["username"];
         $timestamp = $assoc["friends_since"];
+        $level = $assoc["level"];
+        $highscore = $assoc["punkte"];
 
-        return new FriendRequest($senderId, $receiverId, $sender, $timestamp);
+        return new FriendRequest($senderId, $receiverId, $sender, $timestamp, $level, $highscore);
     }
 
 

@@ -18,8 +18,16 @@ session_start();
         <h1 class="text-sm-start text-center mb-3">Deine Freunde</h1>
         <div class=" text-sm-start text-center">
         <div class="btn-group ms-sm-2 mt-sm-0 mt-2" role="group">
-            <button id="datesDesc" type="button" class="btn btn-warning"><i class="fa-solid fa-arrow-down"></i> Datum</button>
-            <button id="datesAsc" type="button" class="btn btn-warning"><i class="fa-solid fa-arrow-up"></i>  Datum</button>
+            <button id="datesDescFriends" type="button" class="btn btn-warning"><i class="fa-solid fa-arrow-down"></i> Datum</button>
+            <button id="datesAscFriends" type="button" class="btn btn-warning"><i class="fa-solid fa-arrow-up"></i>  Datum</button>
+        </div>
+        <div class="btn-group ms-sm-2 mt-sm-0 mt-2" role="group">
+            <button id="levelDescFriends" type="button" class="btn btn-primary"><i class="fa-solid fa-arrow-down"></i> Level</button>
+            <button id="levelAscFriends" type="button" class="btn btn-primary"><i class="fa-solid fa-arrow-up"></i>  Level</button>
+        </div>
+        <div class="btn-group ms-sm-2 mt-sm-0 mt-2" role="group">
+            <button id="highscoreDescFriends" type="button" class="btn btn-warning"><i class="fa-solid fa-arrow-down"></i> Highscore</button>
+            <button id="highscoreAscFriends" type="button" class="btn btn-warning"><i class="fa-solid fa-arrow-up"></i>  Highscore</button>
         </div>
         </div>
         <div id="friends" class="mt-4">
