@@ -5,7 +5,7 @@ $(function () {
     hideGameCards();
     hideResults();
 });
-const STARTING_GAME_TIME_SECONDS = 5;
+const STARTING_GAME_TIME_SECONDS = 60;
 const FADING_TIME_MS = 500;
 class Game {
     constructor() {
@@ -178,14 +178,16 @@ function loadVocabulary(language) {
         data: { method: "queryRandomVocabByLanguage", param: language },
         dataType: "json",
         success: function (response) {
-            console.log("Success, AJAX call for 'queryRandomVocabByLanguage' made");
+            console.log("Success, AJAX call for 'queryRandomVocabByLanguage' Language: " +
+                language +
+                " made");
             console.log(response);
             setUpGameCards(response);
         },
         error: function (response) {
             console.log("Error, AJAX call for 'queryRandomVocabByLanguage' failed");
             console.log(response);
-        }
+        },
     });
 }
 function sendResultsToBackend(points) {
@@ -205,7 +207,7 @@ function sendResultsToBackend(points) {
         error: function (response) {
             console.log("Error, AJAX call for 'insertGameResultsIntoDatabase' failed");
             console.log(response);
-        }
+        },
     });
 }
 function setUpGameCards(response) {
@@ -228,7 +230,10 @@ function createErrorMessage(message) {
     $("#gameError").hide();
 }
 function isLanguageSelected() {
-    return isEnglishSelected() || isSpanishSelected() || isFrenchSelected() || isRussianSelected();
+    return (isEnglishSelected() ||
+        isSpanishSelected() ||
+        isFrenchSelected() ||
+        isRussianSelected());
 }
 function isEnglishSelected() {
     return $("#english").is(":checked");
