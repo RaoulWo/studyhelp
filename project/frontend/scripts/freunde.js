@@ -5,11 +5,16 @@ $(function () {
 });
 // Class Definition
 class FriendRequest {
-    constructor(senderId, receiverId, sender, timestamp) {
+    constructor(senderId, receiverId, sender, timestamp, level, highscore) {
         this.senderId = senderId;
         this.receiverId = receiverId;
         this.sender = sender;
         this.timestamp = timestamp;
+        this.level = level;
+        this.highscore = highscore;
+        if (this.highscore == null) {
+            this.highscore = 0;
+        }
     }
     Log() {
         console.log("-------------");
@@ -42,6 +47,26 @@ class FriendRequests {
     SortByDateDescending() {
         this.requests.sort((a, b) => {
             return b.timestamp.getTime() - a.timestamp.getTime();
+        });
+    }
+    SortByLevelAscending() {
+        this.requests.sort((a, b) => {
+            return Number(a.level) - Number(b.level);
+        });
+    }
+    SortByLevelDescending() {
+        this.requests.sort((a, b) => {
+            return Number(b.level) - Number(a.level);
+        });
+    }
+    SortByHighscoreAscending() {
+        this.requests.sort((a, b) => {
+            return Number(a.highscore) - Number(b.highscore);
+        });
+    }
+    SortByHighscoreDescending() {
+        this.requests.sort((a, b) => {
+            return Number(b.highscore) - Number(a.highscore);
         });
     }
 }
@@ -184,7 +209,7 @@ function ConvertItemToFriendRequest(item) {
     // Apply each element to the Date function
     let d = new Date(Date.UTC(t[0], t[1] - 1, t[2], t[3], t[4], t[5]));
     d.setHours(d.getHours() - 2);
-    return new FriendRequest(senderId, receiverId, sender, d);
+    return new FriendRequest(senderId, receiverId, sender, d, item.level, item.highscore);
 }
 function ConvertItemToUser(item) {
     return new User(item.id, item.username);
@@ -204,7 +229,7 @@ function CreateFriendElements(gs) {
         // Assigning dataset-attributes to the element
         // Append the new stat to the HTML element with id 'friendRequests'
         $("#friends").append(container);
-        CreateFriendContent(containerId, item.sender, item.timestamp);
+        CreateFriendContent(containerId, item.sender, item.timestamp, item.level, item.highscore);
         // Increment count
         count++;
     });
@@ -238,7 +263,7 @@ function CreateUserListElement(user) {
     li.innerHTML = user.username;
     $("#userlist").append(li);
 }
-function CreateFriendContent(id, sender, ts) {
+function CreateFriendContent(id, sender, ts, level, highscore) {
     let requestId = "#" + id;
     // Create header for request-element
     const header = document.createElement("h2");
@@ -275,6 +300,18 @@ function CreateFriendContent(id, sender, ts) {
     date.className = "lead text-sm-start text-center";
     date.innerHTML = '<i class="fa-solid fa-calendar"></i> Freunde seit: ' + str;
     con.append(date);
+    const lvl = document.createElement("p");
+    lvl.className = "lead text-sm-start text-center";
+    lvl.innerHTML = '<i class="fa-solid fa-calendar"></i> Level: ' + level;
+    con.append(lvl);
+    if (highscore == null) {
+        highscore = 0;
+    }
+    const score = document.createElement("p");
+    score.className = "lead text-sm-start text-center";
+    score.innerHTML =
+        '<i class="fa-solid fa-calendar"></i> Highscore: ' + highscore;
+    con.append(score);
     $(requestId).append(con);
 }
 function CreateFriendRequestContent(id, sender, ts) {
@@ -461,4 +498,58 @@ $("#friend").on("input", () => {
     users.Clear();
     destroyUserListElements();
     loadUsers($("#friend").val().toString());
+});
+$("#datesAscFriends").on("click", () => {
+    fadeOutFriends();
+    setTimeout(() => {
+        destroyFriends();
+        friends.SortByDateAscending();
+        CreateFriendElements(friends);
+        fadeInFriends();
+    }, FADING_TIME);
+});
+$("#datesDescFriends").on("click", () => {
+    fadeOutFriends();
+    setTimeout(() => {
+        destroyFriends();
+        friends.SortByDateDescending();
+        CreateFriendElements(friends);
+        fadeInFriends();
+    }, FADING_TIME);
+});
+$("#levelAscFriends").on("click", () => {
+    fadeOutFriends();
+    setTimeout(() => {
+        destroyFriends();
+        friends.SortByLevelAscending();
+        CreateFriendElements(friends);
+        fadeInFriends();
+    }, FADING_TIME);
+});
+$("#levelDescFriends").on("click", () => {
+    fadeOutFriends();
+    setTimeout(() => {
+        destroyFriends();
+        friends.SortByLevelDescending();
+        CreateFriendElements(friends);
+        fadeInFriends();
+    }, FADING_TIME);
+});
+$("#highscoreAscFriends").on("click", () => {
+    fadeOutFriends();
+    setTimeout(() => {
+        destroyFriends();
+        friends.SortByHighscoreAscending();
+        CreateFriendElements(friends);
+        fadeInFriends();
+    }, FADING_TIME);
+});
+$("#highscoreDescFriends").on("click", () => {
+    fadeOutFriends();
+    setTimeout(() => {
+        destroyFriends();
+        friends.SortByHighscoreDescending();
+        CreateFriendElements(friends);
+        fadeInFriends();
+    }, FADING_TIME);
 });
