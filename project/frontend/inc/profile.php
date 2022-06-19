@@ -21,7 +21,7 @@ $imgURL = 'inc/bilder/'.$img1["bild"];
       <!-- Modal Header -->
       <div class="modal-header">
         <img src="<?php echo $imgURL; ?>"  class="rounded" width=75 height =75 alt="Profilbild">
-        <h2 class="modal-title"><?php echo $_SESSION['benutzer']['username'];?></h2>
+        <h2 class="modal-title"><?php echo $username;?></h2>
         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
 

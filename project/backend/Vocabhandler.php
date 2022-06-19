@@ -1,11 +1,8 @@
 <?php
-
-include('Vocabhandler.html');
-
-if (!(isset($_SESSION['benutzer']['benutzer_typ'])) || $_SESSION['benutzer']['benutzer_typ'] != 'Admin') {
+/*if (!(isset($_SESSION['benutzer']['benutzer_typ'])) || $_SESSION['benutzer']['benutzer_typ'] != 'Admin') {
     $_SESSION['Fehler'] = 'Sie haben hier nichts verloren!';
     header("location: ../frontend/Fehler.php");
-  }
+  }*/
 
 
 echo "<a href='Vocabhandler.html'>Return to Vocab Handler</a>  <br><br> <h1>Log: </h1>";
