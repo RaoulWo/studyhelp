@@ -8,6 +8,7 @@ $lvls = mysqli_fetch_assoc(mysqli_query($db, $lvl));
 $img = "SELECT bild FROM user WHERE username='$username'";
 $img1 = mysqli_fetch_assoc(mysqli_query($db, $img));
 $imgURL = 'inc/bilder/'.$img1["bild"];
+$standardimg = 'inc/bilder/standard.jpg';
 ?>
 
 
@@ -20,8 +21,13 @@ $imgURL = 'inc/bilder/'.$img1["bild"];
 
       <!-- Modal Header -->
       <div class="modal-header">
-        <img src="<?php echo $imgURL; ?>"  class="rounded" width=75 height =75 alt="Profilbild">
-        <h2 class="modal-title"><?php echo $username;?></h2>
+        <img src="<?php if($imgURL == 'inc/bilder/') {
+          echo $standardimg;
+        } 
+        else {
+          echo $imgURL;
+        } ?>"  class="rounded" width=75 height =75 alt="Profilbild">
+        <h2 class="modal-title">&nbsp;<?php echo $username;?></h2>
         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
 
